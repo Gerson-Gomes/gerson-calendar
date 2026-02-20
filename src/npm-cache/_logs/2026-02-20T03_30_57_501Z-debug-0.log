@@ -1,0 +1,234 @@
+0 verbose cli /usr/bin/node /usr/bin/npm
+1 info using npm@11.8.0
+2 info using node@v25.6.0
+3 silly config load:file:/usr/lib/node_modules/npm/npmrc
+4 silly config load:file:/home/omar-gerson/Fullstack/gerson-calendar/src/app/frontend/.npmrc
+5 silly config load:file:/home/omar-gerson/.npmrc
+6 silly config load:file:/etc/npmrc
+7 verbose title npm install
+8 verbose argv "install"
+9 verbose logfile logs-max:10 dir:/home/omar-gerson/Fullstack/gerson-calendar/src/npm-cache/_logs/2026-02-20T03_30_57_501Z-
+10 verbose logfile /home/omar-gerson/Fullstack/gerson-calendar/src/npm-cache/_logs/2026-02-20T03_30_57_501Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4496293888 maxSize:1124073472 maxEntrySize:562036736
+13 silly idealTree buildDeps
+14 silly reify moves {}
+15 silly audit bulk request {
+15 silly audit   '@babel/code-frame': [ '7.29.0' ],
+15 silly audit   '@babel/compat-data': [ '7.29.0' ],
+15 silly audit   '@babel/core': [ '7.29.0' ],
+15 silly audit   '@babel/generator': [ '7.29.1' ],
+15 silly audit   '@babel/helper-annotate-as-pure': [ '7.27.3' ],
+15 silly audit   '@babel/helper-compilation-targets': [ '7.28.6' ],
+15 silly audit   '@babel/helper-globals': [ '7.28.0' ],
+15 silly audit   '@babel/helper-module-imports': [ '7.28.6' ],
+15 silly audit   '@babel/helper-module-transforms': [ '7.28.6' ],
+15 silly audit   '@babel/helper-plugin-utils': [ '7.28.6' ],
+15 silly audit   '@babel/helper-string-parser': [ '7.27.1' ],
+15 silly audit   '@babel/helper-validator-identifier': [ '7.28.5' ],
+15 silly audit   '@babel/helper-validator-option': [ '7.27.1' ],
+15 silly audit   '@babel/helpers': [ '7.28.6' ],
+15 silly audit   '@babel/parser': [ '7.29.0' ],
+15 silly audit   '@babel/plugin-syntax-jsx': [ '7.28.6' ],
+15 silly audit   '@babel/plugin-transform-react-jsx': [ '7.28.6' ],
+15 silly audit   '@babel/plugin-transform-react-jsx-development': [ '7.27.1' ],
+15 silly audit   '@babel/plugin-transform-react-jsx-self': [ '7.27.1' ],
+15 silly audit   '@babel/plugin-transform-react-jsx-source': [ '7.27.1' ],
+15 silly audit   '@babel/template': [ '7.28.6' ],
+15 silly audit   '@babel/traverse': [ '7.29.0' ],
+15 silly audit   '@babel/types': [ '7.29.0' ],
+15 silly audit   '@esbuild/android-arm': [ '0.15.18' ],
+15 silly audit   '@esbuild/linux-loong64': [ '0.15.18' ],
+15 silly audit   '@fullcalendar/core': [ '6.1.20' ],
+15 silly audit   '@fullcalendar/daygrid': [ '6.1.20' ],
+15 silly audit   '@fullcalendar/interaction': [ '6.1.20' ],
+15 silly audit   '@fullcalendar/react': [ '6.1.20' ],
+15 silly audit   '@jridgewell/gen-mapping': [ '0.3.13' ],
+15 silly audit   '@jridgewell/remapping': [ '2.3.5' ],
+15 silly audit   '@jridgewell/resolve-uri': [ '3.1.2' ],
+15 silly audit   '@jridgewell/sourcemap-codec': [ '1.5.5' ],
+15 silly audit   '@jridgewell/trace-mapping': [ '0.3.31' ],
+15 silly audit   '@types/prop-types': [ '15.7.15' ],
+15 silly audit   '@types/react': [ '18.3.28' ],
+15 silly audit   '@types/react-dom': [ '18.3.7' ],
+15 silly audit   '@vitejs/plugin-react': [ '2.2.0' ],
+15 silly audit   'baseline-browser-mapping': [ '2.9.19' ],
+15 silly audit   browserslist: [ '4.28.1' ],
+15 silly audit   'caniuse-lite': [ '1.0.30001770' ],
+15 silly audit   'convert-source-map': [ '2.0.0' ],
+15 silly audit   csstype: [ '3.2.3' ],
+15 silly audit   debug: [ '4.4.3' ],
+15 silly audit   'electron-to-chromium': [ '1.5.286' ],
+15 silly audit   esbuild: [ '0.15.18' ],
+15 silly audit   'esbuild-android-64': [ '0.15.18' ],
+15 silly audit   'esbuild-android-arm64': [ '0.15.18' ],
+15 silly audit   'esbuild-darwin-64': [ '0.15.18' ],
+15 silly audit   'esbuild-darwin-arm64': [ '0.15.18' ],
+15 silly audit   'esbuild-freebsd-64': [ '0.15.18' ],
+15 silly audit   'esbuild-freebsd-arm64': [ '0.15.18' ],
+15 silly audit   'esbuild-linux-32': [ '0.15.18' ],
+15 silly audit   'esbuild-linux-64': [ '0.15.18' ],
+15 silly audit   'esbuild-linux-arm': [ '0.15.18' ],
+15 silly audit   'esbuild-linux-arm64': [ '0.15.18' ],
+15 silly audit   'esbuild-linux-mips64le': [ '0.15.18' ],
+15 silly audit   'esbuild-linux-ppc64le': [ '0.15.18' ],
+15 silly audit   'esbuild-linux-riscv64': [ '0.15.18' ],
+15 silly audit   'esbuild-linux-s390x': [ '0.15.18' ],
+15 silly audit   'esbuild-netbsd-64': [ '0.15.18' ],
+15 silly audit   'esbuild-openbsd-64': [ '0.15.18' ],
+15 silly audit   'esbuild-sunos-64': [ '0.15.18' ],
+15 silly audit   'esbuild-windows-32': [ '0.15.18' ],
+15 silly audit   'esbuild-windows-64': [ '0.15.18' ],
+15 silly audit   'esbuild-windows-arm64': [ '0.15.18' ],
+15 silly audit   escalade: [ '3.2.0' ],
+15 silly audit   fsevents: [ '2.3.3' ],
+15 silly audit   'function-bind': [ '1.1.2' ],
+15 silly audit   gensync: [ '1.0.0-beta.2' ],
+15 silly audit   hasown: [ '2.0.2' ],
+15 silly audit   'is-core-module': [ '2.16.1' ],
+15 silly audit   'js-tokens': [ '4.0.0' ],
+15 silly audit   jsesc: [ '3.1.0' ],
+15 silly audit   json5: [ '2.2.3' ],
+15 silly audit   'loose-envify': [ '1.4.0' ],
+15 silly audit   'lru-cache': [ '5.1.1' ],
+15 silly audit   'magic-string': [ '0.26.7' ],
+15 silly audit   ms: [ '2.1.3' ],
+15 silly audit   nanoid: [ '3.3.11' ],
+15 silly audit   'node-releases': [ '2.0.27' ],
+15 silly audit   'path-parse': [ '1.0.7' ],
+15 silly audit   picocolors: [ '1.1.1' ],
+15 silly audit   postcss: [ '8.5.6' ],
+15 silly audit   preact: [ '10.12.1' ],
+15 silly audit   react: [ '18.3.1' ],
+15 silly audit   'react-dom': [ '18.3.1' ],
+15 silly audit   'react-refresh': [ '0.14.2' ],
+15 silly audit   resolve: [ '1.22.11' ],
+15 silly audit   rollup: [ '2.79.2' ],
+15 silly audit   scheduler: [ '0.23.2' ],
+15 silly audit   semver: [ '6.3.1' ],
+15 silly audit   'source-map-js': [ '1.2.1' ],
+15 silly audit   'sourcemap-codec': [ '1.4.8' ],
+15 silly audit   'supports-preserve-symlinks-flag': [ '1.0.0' ],
+15 silly audit   typescript: [ '4.9.5' ],
+15 silly audit   'update-browserslist-db': [ '1.2.3' ],
+15 silly audit   vite: [ '3.2.11' ],
+15 silly audit   yallist: [ '3.1.1' ]
+15 silly audit }
+16 http fetch GET 200 https://registry.npmjs.org/npm 232ms
+17 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 445ms
+18 silly audit report {
+18 silly audit report   esbuild: [
+18 silly audit report     {
+18 silly audit report       id: 1102341,
+18 silly audit report       url: 'https://github.com/advisories/GHSA-67mh-4wv8-2f99',
+18 silly audit report       title: 'esbuild enables any website to send any requests to the development server and read the response',
+18 silly audit report       severity: 'moderate',
+18 silly audit report       vulnerable_versions: '<=0.24.2',
+18 silly audit report       cwe: [Array],
+18 silly audit report       cvss: [Object]
+18 silly audit report     }
+18 silly audit report   ],
+18 silly audit report   vite: [
+18 silly audit report     {
+18 silly audit report       id: 1102436,
+18 silly audit report       url: 'https://github.com/advisories/GHSA-vg6x-rcgg-rjx6',
+18 silly audit report       title: 'Websites were able to send any requests to the development server and read the response in vite',
+18 silly audit report       severity: 'moderate',
+18 silly audit report       vulnerable_versions: '<=4.5.5',
+18 silly audit report       cwe: [Array],
+18 silly audit report       cvss: [Object]
+18 silly audit report     },
+18 silly audit report     {
+18 silly audit report       id: 1103516,
+18 silly audit report       url: 'https://github.com/advisories/GHSA-x574-m823-4x7w',
+18 silly audit report       title: 'Vite bypasses server.fs.deny when using ?raw??',
+18 silly audit report       severity: 'moderate',
+18 silly audit report       vulnerable_versions: '<4.5.10',
+18 silly audit report       cwe: [Array],
+18 silly audit report       cvss: [Object]
+18 silly audit report     },
+18 silly audit report     {
+18 silly audit report       id: 1103883,
+18 silly audit report       url: 'https://github.com/advisories/GHSA-356w-63v5-8wf4',
+18 silly audit report       title: 'Vite has an `server.fs.deny` bypass with an invalid `request-target`',
+18 silly audit report       severity: 'moderate',
+18 silly audit report       vulnerable_versions: '<4.5.13',
+18 silly audit report       cwe: [Array],
+18 silly audit report       cvss: [Object]
+18 silly audit report     },
+18 silly audit report     {
+18 silly audit report       id: 1104172,
+18 silly audit report       url: 'https://github.com/advisories/GHSA-859w-5945-r5v3',
+18 silly audit report       title: "Vite's server.fs.deny bypassed with /. for files under project root",
+18 silly audit report       severity: 'moderate',
+18 silly audit report       vulnerable_versions: '<=4.5.13',
+18 silly audit report       cwe: [Array],
+18 silly audit report       cvss: [Object]
+18 silly audit report     },
+18 silly audit report     {
+18 silly audit report       id: 1104201,
+18 silly audit report       url: 'https://github.com/advisories/GHSA-xcj6-pq6g-qj4x',
+18 silly audit report       title: 'Vite allows server.fs.deny to be bypassed with .svg or relative paths',
+18 silly audit report       severity: 'moderate',
+18 silly audit report       vulnerable_versions: '<4.5.12',
+18 silly audit report       cwe: [Array],
+18 silly audit report       cvss: [Object]
+18 silly audit report     },
+18 silly audit report     {
+18 silly audit report       id: 1107323,
+18 silly audit report       url: 'https://github.com/advisories/GHSA-g4jq-h2w9-997c',
+18 silly audit report       title: 'Vite middleware may serve files starting with the same name with the public directory',
+18 silly audit report       severity: 'low',
+18 silly audit report       vulnerable_versions: '<=5.4.19',
+18 silly audit report       cwe: [Array],
+18 silly audit report       cvss: [Object]
+18 silly audit report     },
+18 silly audit report     {
+18 silly audit report       id: 1107327,
+18 silly audit report       url: 'https://github.com/advisories/GHSA-jqfw-vq24-v9c3',
+18 silly audit report       title: "Vite's `server.fs` settings were not applied to HTML files",
+18 silly audit report       severity: 'low',
+18 silly audit report       vulnerable_versions: '<=5.4.19',
+18 silly audit report       cwe: [Array],
+18 silly audit report       cvss: [Object]
+18 silly audit report     },
+18 silly audit report     {
+18 silly audit report       id: 1109133,
+18 silly audit report       url: 'https://github.com/advisories/GHSA-93m4-6634-74q7',
+18 silly audit report       title: 'vite allows server.fs.deny bypass via backslash on Windows',
+18 silly audit report       severity: 'moderate',
+18 silly audit report       vulnerable_versions: '>=3.2.9 <4.0.0',
+18 silly audit report       cwe: [Array],
+18 silly audit report       cvss: [Object]
+18 silly audit report     },
+18 silly audit report     {
+18 silly audit report       id: 1112510,
+18 silly audit report       url: 'https://github.com/advisories/GHSA-4r4m-qw57-chr8',
+18 silly audit report       title: 'Vite has a `server.fs.deny` bypassed for `inline` and `raw` with `?import` query',
+18 silly audit report       severity: 'moderate',
+18 silly audit report       vulnerable_versions: '<4.5.11',
+18 silly audit report       cwe: [Array],
+18 silly audit report       cvss: [Object]
+18 silly audit report     }
+18 silly audit report   ]
+18 silly audit report }
+19 silly packumentCache corgi:https://registry.npmjs.org/esbuild cache-miss
+20 silly packumentCache corgi:https://registry.npmjs.org/vite cache-miss
+21 http fetch GET 200 https://registry.npmjs.org/esbuild 95ms (cache miss)
+22 silly packumentCache corgi:https://registry.npmjs.org/esbuild set size:undefined disposed:false
+23 http fetch GET 200 https://registry.npmjs.org/vite 165ms (cache miss)
+24 silly packumentCache corgi:https://registry.npmjs.org/vite set size:undefined disposed:false
+25 silly packumentCache corgi:https://registry.npmjs.org/@vitejs%2fplugin-react cache-miss
+26 http fetch GET 200 https://registry.npmjs.org/@vitejs%2fplugin-react 161ms (cache miss)
+27 silly packumentCache corgi:https://registry.npmjs.org/@vitejs%2fplugin-react set size:undefined disposed:false
+28 verbose cwd /home/omar-gerson/Fullstack/gerson-calendar/src/app/frontend
+29 verbose os Linux 6.18.7-arch1-1
+30 verbose node v25.6.0
+31 verbose npm  v11.8.0
+32 notice
+32 notice New [33mminor[39m version of npm available! [33m11.8.0[39m -> [34m11.10.1[39m
+32 notice Changelog: [34mhttps://github.com/npm/cli/releases/tag/v11.10.1[39m
+32 notice To update run: [4mnpm install -g npm@11.10.1[24m
+32 notice  { force: true, Symbol(proc-log.meta): true }
+33 verbose exit 0
+34 info ok

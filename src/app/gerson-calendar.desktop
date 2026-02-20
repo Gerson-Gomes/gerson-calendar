@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Gerson Calendar
+Comment=Local-first offline calendar application
+Exec=gerson-calendar
+Icon=calendar
+Type=Application
+Categories=Office;Calendar;
+Keywords=calendar;events;schedule;
+StartupWMClass=gerson-calendar
