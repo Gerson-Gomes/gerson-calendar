@@ -1,7 +1,7 @@
 # Maintainer: Omar Gerson
 pkgname=gerson-calendar
-pkgver=2.0.0
-pkgrel=1
+pkgver=2.1.0
+pkgrel=2
 pkgdesc="Local-first offline calendar application with reminders and recurring events"
 arch=('x86_64')
 url="https://github.com/omar-gerson/gerson-calendar"
@@ -14,6 +14,7 @@ source=()
 prepare() {
     # Copy the local source code into the isolated makepkg sandbox
     # $startdir is the directory where this PKGBUILD lives
+    rm -rf "$srcdir/app"
     cp -a "$startdir/gerson-calendar" "$srcdir/app"
 }
 

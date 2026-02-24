@@ -22,6 +22,9 @@ export interface EventFormData {
   recurrenceType: string;
   recurrenceInterval: number;
   recurrenceEnd: string;
+  category: string;
+  color: string;
+  allDay: boolean;
 }
 
 export interface EditEventData extends EventFormData {
@@ -29,10 +32,21 @@ export interface EditEventData extends EventFormData {
   fileName?: string;
 }
 
+export const CATEGORY_COLORS: Record<string, string> = {
+  default: '#3b82f6',
+  Work: '#ef4444',
+  Personal: '#10b981',
+  Health: '#f59e0b',
+  Finance: '#8b5cf6',
+  Other: '#6b7280',
+};
+
 export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, editEvent }: EventModalProps) {
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
+  const [startTime, setStartTime] = useState('09:00');
   const [endDate, setEndDate] = useState('');
+  const [endTime, setEndTime] = useState('10:00');
   const [description, setDescription] = useState('');
   const [filePath, setFilePath] = useState('');
   const [fileName, setFileName] = useState('');
@@ -41,15 +55,22 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
   const [recurrenceType, setRecurrenceType] = useState('none');
   const [recurrenceInterval, setRecurrenceInterval] = useState(1);
   const [recurrenceEnd, setRecurrenceEnd] = useState('');
+  const [category, setCategory] = useState('default');
+  const [color, setColor] = useState('#3b82f6');
+  const [allDay, setAllDay] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
 
   const isEditing = !!editEvent;
 
-  // Helper to convert a Date or ISO string to local datetime-local format
-  const toLocalDatetime = (d: Date) => {
+  const toLocalDate = (d: Date) => {
     const pad = (n: number) => String(n).padStart(2, '0');
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  };
+
+  const toLocalTime = (d: Date) => {
+    const pad = (n: number) => String(n).padStart(2, '0');
+    return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
   };
 
   useEffect(() => {
@@ -57,8 +78,24 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
 
     if (editEvent) {
       setTitle(editEvent.title);
-      setStartDate(toLocalDatetime(new Date(editEvent.startDate)));
-      setEndDate(toLocalDatetime(new Date(editEvent.endDate)));
+      const sd = new Date(editEvent.startDate);
+      const ed = new Date(editEvent.endDate);
+      const isAllDay = editEvent.allDay || false;
+      setAllDay(isAllDay);
+      if (isAllDay) {
+        setStartDate(toLocalDate(sd));
+        // For all-day, display end as the day before the exclusive end stored in DB
+        const displayEnd = new Date(ed);
+        displayEnd.setDate(displayEnd.getDate() - 1);
+        setEndDate(toLocalDate(displayEnd));
+        setStartTime('09:00');
+        setEndTime('10:00');
+      } else {
+        setStartDate(toLocalDate(sd));
+        setStartTime(toLocalTime(sd));
+        setEndDate(toLocalDate(ed));
+        setEndTime(toLocalTime(ed));
+      }
       setDescription(editEvent.description || '');
       setFilePath(editEvent.filePath || '');
       setFileName(editEvent.fileName || '');
@@ -67,13 +104,31 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
       setRecurrenceType(editEvent.recurrenceType || 'none');
       setRecurrenceInterval(editEvent.recurrenceInterval || 1);
       setRecurrenceEnd(editEvent.recurrenceEnd || '');
+      const cat = editEvent.category || 'default';
+      setCategory(cat);
+      setColor(editEvent.color || CATEGORY_COLORS[cat] || '#3b82f6');
     } else if (selectedDate) {
-      setStartDate(toLocalDatetime(selectedDate));
-      const endDateTime = new Date(selectedDate);
-      endDateTime.setHours(endDateTime.getHours() + 1);
-      setEndDate(toLocalDatetime(endDateTime));
+      setAllDay(false);
+      setStartDate(toLocalDate(selectedDate));
+      setStartTime('09:00');
+      setEndDate(toLocalDate(selectedDate));
+      setEndTime('10:00');
     }
   }, [selectedDate, isOpen, editEvent]);
+
+  const handleCategoryChange = (newCategory: string) => {
+    setCategory(newCategory);
+    setColor(CATEGORY_COLORS[newCategory] || '#3b82f6');
+  };
+
+  const handleAllDayToggle = (checked: boolean) => {
+    setAllDay(checked);
+    if (!checked) {
+      // Switching to timed: ensure times are set
+      if (!startTime) setStartTime('09:00');
+      if (!endTime) setEndTime('10:00');
+    }
+  };
 
   const handleFileSelect = async () => {
     try {
@@ -103,12 +158,24 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
       return;
     }
 
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+    let startISO: string;
+    let endISO: string;
 
-    if (end <= start) {
-      setError('End date must be after start date');
-      return;
+    if (allDay) {
+      startISO = new Date(startDate + 'T00:00:00Z').toISOString();
+      // Exclusive end: next day midnight
+      const endD = new Date(endDate + 'T00:00:00Z');
+      endD.setUTCDate(endD.getUTCDate() + 1);
+      endISO = endD.toISOString();
+    } else {
+      const start = new Date(`${startDate}T${startTime || '09:00'}:00`);
+      const end = new Date(`${endDate}T${endTime || '10:00'}:00`);
+      if (end <= start) {
+        setError('End must be after start');
+        return;
+      }
+      startISO = start.toISOString();
+      endISO = end.toISOString();
     }
 
     setIsSaving(true);
@@ -116,8 +183,8 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
     try {
       const formData: EventFormData = {
         title: title.trim(),
-        startDate: start.toISOString(),
-        endDate: end.toISOString(),
+        startDate: startISO,
+        endDate: endISO,
         description: description.trim(),
         filePath,
         zoomLink: zoomLink.trim(),
@@ -125,6 +192,9 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
         recurrenceType,
         recurrenceInterval,
         recurrenceEnd,
+        category,
+        color,
+        allDay,
       };
 
       if (isEditing && onUpdate && editEvent) {
@@ -145,7 +215,9 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
   const resetForm = () => {
     setTitle('');
     setStartDate('');
+    setStartTime('09:00');
     setEndDate('');
+    setEndTime('10:00');
     setDescription('');
     setFilePath('');
     setFileName('');
@@ -154,6 +226,9 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
     setRecurrenceType('none');
     setRecurrenceInterval(1);
     setRecurrenceEnd('');
+    setCategory('default');
+    setColor('#3b82f6');
+    setAllDay(false);
     setError('');
   };
 
@@ -186,35 +261,124 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Event title"
               disabled={isSaving}
+              autoFocus
               required
             />
           </div>
 
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="startDate">Start Date *</label>
-              <input
-                id="startDate"
-                type="datetime-local"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
+              <label htmlFor="category">Category</label>
+              <select
+                id="category"
+                value={category}
+                onChange={(e) => handleCategoryChange(e.target.value)}
                 disabled={isSaving}
-                required
-              />
+                className="reminder-select"
+              >
+                <option value="default">General</option>
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Health">Health</option>
+                <option value="Finance">Finance</option>
+                <option value="Other">Other</option>
+              </select>
             </div>
-
             <div className="form-group">
-              <label htmlFor="endDate">End Date *</label>
-              <input
-                id="endDate"
-                type="datetime-local"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                disabled={isSaving}
-                required
-              />
+              <label htmlFor="color">Color</label>
+              <div className="color-input-group">
+                <input
+                  id="color"
+                  type="color"
+                  value={color}
+                  onChange={(e) => setColor(e.target.value)}
+                  disabled={isSaving}
+                  className="color-picker"
+                />
+                <span className="color-swatch" style={{ backgroundColor: color }} />
+              </div>
             </div>
           </div>
+
+          <div className="form-group">
+            <label className="allday-label">
+              <input
+                type="checkbox"
+                checked={allDay}
+                onChange={(e) => handleAllDayToggle(e.target.checked)}
+                disabled={isSaving}
+              />
+              <span>All day</span>
+            </label>
+          </div>
+
+          {allDay ? (
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="startDateDay">Start Date *</label>
+                <input
+                  id="startDateDay"
+                  type="date"
+                  value={startDate}
+                  onChange={(e) => setStartDate(e.target.value)}
+                  disabled={isSaving}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="endDateDay">End Date *</label>
+                <input
+                  id="endDateDay"
+                  type="date"
+                  value={endDate}
+                  onChange={(e) => setEndDate(e.target.value)}
+                  disabled={isSaving}
+                  required
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="form-row">
+              <div className="form-group">
+                <label>Start *</label>
+                <div className="datetime-group">
+                  <input
+                    type="date"
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    disabled={isSaving}
+                    required
+                  />
+                  <input
+                    type="time"
+                    value={startTime}
+                    onChange={(e) => setStartTime(e.target.value)}
+                    disabled={isSaving}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="form-group">
+                <label>End *</label>
+                <div className="datetime-group">
+                  <input
+                    type="date"
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    disabled={isSaving}
+                    required
+                  />
+                  <input
+                    type="time"
+                    value={endTime}
+                    onChange={(e) => setEndTime(e.target.value)}
+                    disabled={isSaving}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="form-group">
             <label htmlFor="description">Description</label>
@@ -229,7 +393,7 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
           </div>
 
           <div className="form-group">
-            <label htmlFor="zoomLink">Zoom Link</label>
+            <label htmlFor="zoomLink">Zoom / Meeting Link</label>
             <input
               id="zoomLink"
               type="url"

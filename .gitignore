@@ -1,0 +1,8 @@
+src/
+pkg/
+*.pkg.tar.zst
+*.pkg.tar.xz
+git_status*.txt
+git_log*.txt
+git_stat*.txt
+git_parent*.txt

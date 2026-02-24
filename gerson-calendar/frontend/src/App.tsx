@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { EventModal, EventFormData, EditEventData } from './components/EventModal';
 import { EventDetail, EventDetailData } from './components/EventDetail';
-import { SaveEvent, GetAllEvents, DeleteEvent, UpdateEvent, DeleteRecurringSeries, ImportICS, OpenFile, OpenURL } from '../wailsjs/go/main/App';
+import { SaveEvent, GetAllEvents, DeleteEvent, UpdateEvent, DeleteRecurringSeries, ImportICS, ExportICS, OpenFile, OpenURL } from '../wailsjs/go/main/App';
 import './App.css';
 
 interface CalendarEvent {
@@ -20,6 +20,9 @@ interface CalendarEvent {
   recurrenceType: string;
   recurrenceInterval: number;
   recurrenceEnd: string;
+  category: string;
+  color: string;
+  allDay: boolean;
   createdAt: string;
 }
 
@@ -30,6 +33,16 @@ function App() {
   const [detailEvent, setDetailEvent] = useState<EventDetailData | null>(null);
   const [editEvent, setEditEvent] = useState<EditEventData | null>(null);
   const [error, setError] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('gc-theme') === 'dark');
+
+  const calendarRef = useRef<FullCalendar>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
+    localStorage.setItem('gc-theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
 
   useEffect(() => {
     loadEvents();
@@ -44,6 +57,61 @@ function App() {
       setError('Failed to load events from database.');
     }
   };
+
+  const handleExportICS = useCallback(async () => {
+    try {
+      const filePath = await ExportICS();
+      if (filePath) {
+        await OpenFile(filePath);
+      }
+    } catch {
+      setError('Failed to export calendar.');
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      const tag = (document.activeElement as HTMLElement)?.tagName;
+      const inInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(tag);
+
+      if (e.key === 'Escape') {
+        setIsModalOpen(false);
+        setDetailEvent(null);
+        return;
+      }
+
+      if (inInput) return;
+
+      if (e.ctrlKey && e.key === 'n') {
+        e.preventDefault();
+        setEditEvent(null);
+        setIsModalOpen(true);
+        return;
+      }
+      if (e.ctrlKey && e.key === 'f') {
+        e.preventDefault();
+        searchRef.current?.focus();
+        return;
+      }
+      if (e.ctrlKey && e.key === 'e') {
+        e.preventDefault();
+        handleExportICS();
+        return;
+      }
+
+      const cal = calendarRef.current?.getApi();
+      if (!cal) return;
+
+      if (e.key === 't' || e.key === 'T') cal.today();
+      else if (e.key === 'ArrowLeft') cal.prev();
+      else if (e.key === 'ArrowRight') cal.next();
+      else if (e.key === 'm' || e.key === 'M') cal.changeView('dayGridMonth');
+      else if (e.key === 'w' || e.key === 'W') cal.changeView('dayGridWeek');
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [handleExportICS]);
 
   const handleDateClick = (arg: { date: Date }) => {
     setSelectedDate(arg.date);
@@ -89,6 +157,9 @@ function App() {
       recurrenceType: (extendedProps.recurrenceType as string) ?? base.recurrenceType,
       recurrenceInterval: (extendedProps.recurrenceInterval as number) ?? base.recurrenceInterval,
       recurrenceEnd: (extendedProps.recurrenceEnd as string) ?? base.recurrenceEnd,
+      category: (extendedProps.category as string) ?? base.category,
+      color: (extendedProps.color as string) ?? base.color,
+      allDay: (extendedProps.allDay as boolean) ?? base.allDay,
     });
   };
 
@@ -97,7 +168,7 @@ function App() {
       await DeleteEvent(id);
       await loadEvents();
       setError('');
-    } catch (err) {
+    } catch {
       setError('Failed to delete event.');
     }
   };
@@ -107,7 +178,7 @@ function App() {
       await DeleteRecurringSeries(id);
       await loadEvents();
       setError('');
-    } catch (err) {
+    } catch {
       setError('Failed to delete recurring series.');
     }
   };
@@ -126,6 +197,9 @@ function App() {
       recurrenceType: event.recurrenceType,
       recurrenceInterval: event.recurrenceInterval,
       recurrenceEnd: event.recurrenceEnd,
+      category: event.category,
+      color: event.color,
+      allDay: event.allDay,
     });
     setIsModalOpen(true);
   };
@@ -146,16 +220,61 @@ function App() {
         setError('');
         alert(`Successfully imported ${count} event(s).`);
       }
-    } catch (err) {
+    } catch {
       setError('Failed to import ICS file.');
     }
   };
 
-  const calendarEvents = events.map(event => ({
+  const handleEventDrop = async (dropInfo: {
+    event: { id: string; start: Date | null; end: Date | null; allDay: boolean };
+    revert: () => void;
+  }) => {
+    const { event, revert } = dropInfo;
+    const base = events.find(e => e.id === parseInt(event.id));
+    if (!base || !event.start) { revert(); return; }
+
+    const newStart = event.start;
+    const newEnd = event.end || new Date(newStart.getTime() + 3600000);
+
+    try {
+      const formData: EventFormData = {
+        title: base.title,
+        startDate: newStart.toISOString(),
+        endDate: newEnd.toISOString(),
+        description: base.description,
+        filePath: base.filePath,
+        zoomLink: base.zoomLink,
+        reminderMinutes: base.reminderMinutes,
+        recurrenceType: base.recurrenceType,
+        recurrenceInterval: base.recurrenceInterval,
+        recurrenceEnd: base.recurrenceEnd,
+        category: base.category,
+        color: base.color,
+        allDay: event.allDay,
+      };
+      await UpdateEvent(parseInt(event.id), formData);
+      await loadEvents();
+    } catch {
+      revert();
+      setError('Failed to reschedule event.');
+    }
+  };
+
+  const filteredEvents = searchQuery.trim()
+    ? events.filter(e =>
+        e.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (e.description || '').toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : events;
+
+  const calendarEvents = filteredEvents.map(event => ({
     id: event.id.toString(),
     title: event.title,
     start: event.startDate,
     end: event.endDate,
+    allDay: event.allDay,
+    backgroundColor: event.color || '#3b82f6',
+    borderColor: event.color || '#3b82f6',
     extendedProps: {
       description: event.description,
       filePath: event.filePath,
@@ -165,6 +284,9 @@ function App() {
       recurrenceType: event.recurrenceType,
       recurrenceInterval: event.recurrenceInterval,
       recurrenceEnd: event.recurrenceEnd,
+      category: event.category,
+      color: event.color,
+      allDay: event.allDay,
     },
   }));
 
@@ -172,11 +294,35 @@ function App() {
     <div id="App">
       <div className="calendar-header">
         <h1>Gerson Calendar</h1>
+        <div className="search-bar-wrapper">
+          <input
+            ref={searchRef}
+            type="search"
+            className="search-bar"
+            placeholder="Search events... (Ctrl+F)"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
         <div className="header-actions">
-          <button className="import-button" onClick={handleImportICS}>
-            📥 Import ICS
+          <button
+            className="theme-toggle"
+            onClick={() => setIsDarkMode(d => !d)}
+            title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {isDarkMode ? '☀' : '☾'}
           </button>
-          <button className="add-event-button" onClick={() => { setEditEvent(null); setIsModalOpen(true); }}>
+          <button className="import-button" onClick={handleImportICS} title="Import ICS calendar file">
+            Import ICS
+          </button>
+          <button className="export-button" onClick={handleExportICS} title="Export all events to ICS (Ctrl+E)">
+            Export ICS
+          </button>
+          <button
+            className="add-event-button"
+            onClick={() => { setEditEvent(null); setIsModalOpen(true); }}
+            title="New event (Ctrl+N)"
+          >
             + Add Event
           </button>
         </div>
@@ -190,11 +336,14 @@ function App() {
 
       <div className="calendar-container">
         <FullCalendar
+          ref={calendarRef}
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
           events={calendarEvents}
           dateClick={handleDateClick}
           eventClick={handleEventClick}
+          eventDrop={handleEventDrop}
+          editable={true}
           height="auto"
           headerToolbar={{
             left: 'prev,next today',

@@ -12,104 +12,174 @@
 }
 
 .modal-content {
-  background: white;
+  background: var(--bg-surface, white);
   border-radius: 8px;
   padding: 24px;
   width: 90%;
-  max-width: 600px;
+  max-width: 580px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color, #e0e0e0);
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
 
 .modal-header h2 {
   margin: 0;
-  font-size: 24px;
-  color: #1a1a1a;
+  font-size: 20px;
+  color: var(--text-primary, #1a1a1a);
+  font-weight: 700;
 }
 
 .close-button {
   background: none;
   border: none;
-  font-size: 32px;
-  color: #666;
+  font-size: 28px;
+  color: var(--text-secondary, #666);
   cursor: pointer;
   padding: 0;
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   line-height: 1;
   transition: color 0.2s;
 }
 
 .close-button:hover {
-  color: #000;
+  color: var(--text-primary, #000);
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 20px;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.form-row .form-group {
+  flex: 1;
+  margin-bottom: 0;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #333;
-  font-size: 14px;
+  margin-bottom: 6px;
+  font-weight: 600;
+  color: var(--text-secondary, #555);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 9px 11px;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 6px;
   font-size: 14px;
   font-family: inherit;
   transition: border-color 0.2s;
+  background: var(--bg-surface, white);
+  color: var(--text-primary, #1a1a1a);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #0066cc;
+  border-color: var(--accent, #0066cc);
 }
 
 .form-group textarea {
   resize: vertical;
 }
 
+.datetime-group {
+  display: flex;
+  gap: 6px;
+}
+
+.datetime-group input[type="date"] {
+  flex: 1 1 auto;
+}
+
+.datetime-group input[type="time"] {
+  flex: 0 0 auto;
+  width: 90px;
+}
+
+.allday-label {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-primary, #333) !important;
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+  font-weight: 500 !important;
+}
+
+.allday-label input[type="checkbox"] {
+  width: auto;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.color-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.color-picker {
+  width: 44px !important;
+  height: 36px;
+  padding: 2px 4px !important;
+  border: 1px solid var(--border-color, #ddd) !important;
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--bg-surface, white) !important;
+}
+
+.color-swatch {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color, #ddd);
+  flex-shrink: 0;
+}
+
 .file-input-group {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .file-select-button {
-  padding: 10px 16px;
-  background: #f0f0f0;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 8px 14px;
+  background: var(--bg-hover, #f0f0f0);
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 13px;
+  color: var(--text-primary, #333);
   transition: background-color 0.2s;
+  white-space: nowrap;
 }
 
 .file-select-button:hover {
-  background: #e0e0e0;
+  background: var(--border-color, #e0e0e0);
 }
 
 .file-select-button:disabled {
@@ -118,83 +188,78 @@
 }
 
 .file-name {
-  font-size: 14px;
-  color: #666;
+  font-size: 13px;
+  color: var(--text-secondary, #666);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.form-row {
-  display: flex;
-  gap: 12px;
-}
-
-.form-row .form-group {
-  flex: 1;
-}
-
 .reminder-select {
   width: 100%;
-  padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  padding: 9px 11px;
+  border: 1px solid var(--border-color, #ddd);
+  border-radius: 6px;
   font-size: 14px;
   font-family: inherit;
-  background: white;
+  background: var(--bg-surface, white);
+  color: var(--text-primary, #1a1a1a);
   cursor: pointer;
   transition: border-color 0.2s;
 }
 
 .reminder-select:focus {
   outline: none;
-  border-color: #0066cc;
+  border-color: var(--accent, #0066cc);
 }
 
 .error-message {
-  padding: 12px;
-  background: #fee;
-  border: 1px solid #fcc;
-  border-radius: 4px;
-  color: #c00;
-  font-size: 14px;
-  margin-bottom: 16px;
+  padding: 10px 12px;
+  background: var(--error-bg, #fee);
+  border: 1px solid var(--error-border, #fcc);
+  border-radius: 6px;
+  color: var(--error-text, #c00);
+  font-size: 13px;
+  margin-bottom: 14px;
 }
 
 .modal-footer {
   display: flex;
   justify-content: flex-end;
-  gap: 12px;
-  margin-top: 24px;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color, #eee);
 }
 
 .cancel-button,
 .save-button {
-  padding: 10px 24px;
+  padding: 9px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   transition: background-color 0.2s;
 }
 
 .cancel-button {
-  background: #f0f0f0;
-  color: #333;
+  background: var(--bg-hover, #f0f0f0);
+  color: var(--text-primary, #333);
+  border: 1px solid var(--border-color, #ddd);
 }
 
 .cancel-button:hover {
-  background: #e0e0e0;
+  background: var(--border-color, #e0e0e0);
 }
 
 .save-button {
-  background: #0066cc;
+  background: var(--accent, #0066cc);
   color: white;
 }
 
 .save-button:hover {
-  background: #0052a3;
+  background: var(--accent-hover, #0052a3);
 }
 
 .cancel-button:disabled,

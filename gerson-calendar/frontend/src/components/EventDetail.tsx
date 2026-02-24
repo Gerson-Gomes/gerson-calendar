@@ -13,6 +13,9 @@ export interface EventDetailData {
   recurrenceType: string;
   recurrenceInterval: number;
   recurrenceEnd: string;
+  category: string;
+  color: string;
+  allDay: boolean;
 }
 
 interface EventDetailProps {
@@ -25,8 +28,21 @@ interface EventDetailProps {
   onOpenURL: (url: string) => void;
 }
 
-function formatDateTime(iso: string): string {
-  return new Date(iso).toLocaleString(undefined, {
+const CATEGORY_LABELS: Record<string, string> = {
+  default: 'General',
+  Work: 'Work',
+  Personal: 'Personal',
+  Health: 'Health',
+  Finance: 'Finance',
+  Other: 'Other',
+};
+
+function formatDateTime(iso: string, allDay?: boolean): string {
+  const d = new Date(iso);
+  if (allDay) {
+    return d.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+  }
+  return d.toLocaleString(undefined, {
     weekday: 'short',
     year: 'numeric',
     month: 'short',
@@ -49,6 +65,7 @@ export function EventDetail({ event, onClose, onDelete, onDeleteSeries, onEdit, 
   if (!event) return null;
 
   const isRecurring = event.recurrenceType && event.recurrenceType !== 'none';
+  const categoryLabel = CATEGORY_LABELS[event.category] || event.category || 'General';
 
   const handleDelete = () => {
     if (isRecurring) {
@@ -76,19 +93,37 @@ export function EventDetail({ event, onClose, onDelete, onDeleteSeries, onEdit, 
     <div className="detail-overlay" onClick={onClose}>
       <div className="detail-content" onClick={(e) => e.stopPropagation()}>
         <div className="detail-header">
-          <h2>{event.title}</h2>
+          <div className="detail-title-row">
+            <span className="detail-color-dot" style={{ backgroundColor: event.color || '#3b82f6' }} />
+            <h2>{event.title}</h2>
+          </div>
           <button className="close-button" onClick={onClose}>×</button>
         </div>
 
         <div className="detail-body">
           <div className="detail-row">
+            <span className="detail-label">Category</span>
+            <span className="detail-value detail-category">
+              <span className="category-dot" style={{ backgroundColor: event.color || '#3b82f6' }} />
+              {categoryLabel}
+            </span>
+          </div>
+
+          <div className="detail-row">
             <span className="detail-label">Start</span>
-            <span className="detail-value">{formatDateTime(event.startDate)}</span>
+            <span className="detail-value">{formatDateTime(event.startDate, event.allDay)}</span>
           </div>
           <div className="detail-row">
             <span className="detail-label">End</span>
-            <span className="detail-value">{formatDateTime(event.endDate)}</span>
+            <span className="detail-value">{formatDateTime(event.endDate, event.allDay)}</span>
           </div>
+
+          {event.allDay && (
+            <div className="detail-row">
+              <span className="detail-label">Type</span>
+              <span className="detail-value">All day</span>
+            </div>
+          )}
 
           {event.description && (
             <div className="detail-row detail-row--block">

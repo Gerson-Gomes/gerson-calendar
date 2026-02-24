@@ -15,6 +15,9 @@ export namespace database {
 	    recurrenceType: string;
 	    recurrenceInterval: number;
 	    recurrenceEnd: string;
+	    category: string;
+	    color: string;
+	    allDay: boolean;
 	    // Go type: time
 	    createdAt: any;
 	
@@ -36,6 +39,9 @@ export namespace database {
 	        this.recurrenceType = source["recurrenceType"];
 	        this.recurrenceInterval = source["recurrenceInterval"];
 	        this.recurrenceEnd = source["recurrenceEnd"];
+	        this.category = source["category"];
+	        this.color = source["color"];
+	        this.allDay = source["allDay"];
 	        this.createdAt = this.convertValues(source["createdAt"], null);
 	    }
 	
@@ -73,6 +79,9 @@ export namespace main {
 	    recurrenceType: string;
 	    recurrenceInterval: number;
 	    recurrenceEnd: string;
+	    category: string;
+	    color: string;
+	    allDay: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new EventInput(source);
@@ -90,6 +99,9 @@ export namespace main {
 	        this.recurrenceType = source["recurrenceType"];
 	        this.recurrenceInterval = source["recurrenceInterval"];
 	        this.recurrenceEnd = source["recurrenceEnd"];
+	        this.category = source["category"];
+	        this.color = source["color"];
+	        this.allDay = source["allDay"];
 	    }
 	}
 

@@ -7,6 +7,8 @@ export function DeleteEvent(arg1:number):Promise<void>;
 
 export function DeleteRecurringSeries(arg1:number):Promise<void>;
 
+export function ExportICS():Promise<string>;
+
 export function GetAllEvents():Promise<Array<database.Event>>;
 
 export function ImportICS():Promise<number>;

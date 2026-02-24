@@ -23,6 +23,9 @@ type Event struct {
 	RecurrenceType     string    `json:"recurrenceType"`
 	RecurrenceInterval int       `json:"recurrenceInterval"`
 	RecurrenceEnd      string    `json:"recurrenceEnd"`
+	Category           string    `json:"category"`
+	Color              string    `json:"color"`
+	AllDay             bool      `json:"allDay"`
 	CreatedAt          time.Time `json:"createdAt"`
 }
 
@@ -85,19 +88,27 @@ func (db *DB) createTables() error {
 		return fmt.Errorf("failed to create tables: %w", err)
 	}
 
-	// Auto-migrate: add new columns if missing
+	// Auto-migrate: add new columns if missing (errors ignored for existing columns)
 	db.conn.Exec(`ALTER TABLE events ADD COLUMN reminder_minutes INTEGER DEFAULT 0`)
 	db.conn.Exec(`ALTER TABLE events ADD COLUMN recurrence_type TEXT DEFAULT 'none'`)
 	db.conn.Exec(`ALTER TABLE events ADD COLUMN recurrence_interval INTEGER DEFAULT 1`)
 	db.conn.Exec(`ALTER TABLE events ADD COLUMN recurrence_end TEXT DEFAULT ''`)
+	db.conn.Exec(`ALTER TABLE events ADD COLUMN category TEXT DEFAULT 'default'`)
+	db.conn.Exec(`ALTER TABLE events ADD COLUMN color TEXT DEFAULT '#3b82f6'`)
+	db.conn.Exec(`ALTER TABLE events ADD COLUMN all_day INTEGER DEFAULT 0`)
 
 	return nil
 }
 
 func (db *DB) SaveEvent(event Event) (int64, error) {
+	allDayInt := 0
+	if event.AllDay {
+		allDayInt = 1
+	}
+
 	query := `
-		INSERT INTO events (title, start_date, end_date, description, file_path, file_name, zoom_link, reminder_minutes, recurrence_type, recurrence_interval, recurrence_end)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+		INSERT INTO events (title, start_date, end_date, description, file_path, file_name, zoom_link, reminder_minutes, recurrence_type, recurrence_interval, recurrence_end, category, color, all_day)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 	`
 
 	result, err := db.conn.Exec(
@@ -113,6 +124,9 @@ func (db *DB) SaveEvent(event Event) (int64, error) {
 		event.RecurrenceType,
 		event.RecurrenceInterval,
 		event.RecurrenceEnd,
+		event.Category,
+		event.Color,
+		allDayInt,
 	)
 
 	if err != nil {
@@ -129,6 +143,7 @@ func (db *DB) SaveEvent(event Event) (int64, error) {
 
 func scanEvent(rows *sql.Rows) (Event, error) {
 	var event Event
+	var allDayInt int
 	err := rows.Scan(
 		&event.ID,
 		&event.Title,
@@ -142,12 +157,16 @@ func scanEvent(rows *sql.Rows) (Event, error) {
 		&event.RecurrenceType,
 		&event.RecurrenceInterval,
 		&event.RecurrenceEnd,
+		&event.Category,
+		&event.Color,
+		&allDayInt,
 		&event.CreatedAt,
 	)
+	event.AllDay = allDayInt != 0
 	return event, err
 }
 
-const eventColumns = `id, title, start_date, end_date, description, file_path, file_name, zoom_link, reminder_minutes, recurrence_type, recurrence_interval, recurrence_end, created_at`
+const eventColumns = `id, title, start_date, end_date, description, file_path, file_name, zoom_link, reminder_minutes, recurrence_type, recurrence_interval, recurrence_end, category, color, all_day, created_at`
 
 func (db *DB) GetEvents(startDate, endDate time.Time) ([]Event, error) {
 	query := `SELECT ` + eventColumns + ` FROM events WHERE start_date >= ? AND end_date <= ? ORDER BY start_date ASC`
@@ -198,6 +217,32 @@ func (db *DB) GetAllEvents() ([]Event, error) {
 
 	// Expand recurring events into virtual instances
 	return expandRecurring(dbEvents), nil
+}
+
+func (db *DB) SearchEvents(query string) ([]Event, error) {
+	pattern := "%" + query + "%"
+	q := `SELECT ` + eventColumns + ` FROM events WHERE title LIKE ? OR description LIKE ? ORDER BY start_date ASC`
+
+	rows, err := db.conn.Query(q, pattern, pattern)
+	if err != nil {
+		return nil, fmt.Errorf("failed to search events: %w", err)
+	}
+	defer rows.Close()
+
+	var events []Event
+	for rows.Next() {
+		event, err := scanEvent(rows)
+		if err != nil {
+			return nil, fmt.Errorf("failed to scan event: %w", err)
+		}
+		events = append(events, event)
+	}
+
+	if err = rows.Err(); err != nil {
+		return nil, fmt.Errorf("error iterating events: %w", err)
+	}
+
+	return events, nil
 }
 
 // expandRecurring generates virtual instances for recurring events up to 1 year ahead.
@@ -262,11 +307,17 @@ func expandRecurring(events []Event) []Event {
 }
 
 func (db *DB) UpdateEvent(id int, event Event) error {
+	allDayInt := 0
+	if event.AllDay {
+		allDayInt = 1
+	}
+
 	query := `
 		UPDATE events
 		SET title = ?, start_date = ?, end_date = ?, description = ?,
 		    file_path = ?, file_name = ?, zoom_link = ?, reminder_minutes = ?,
-		    recurrence_type = ?, recurrence_interval = ?, recurrence_end = ?
+		    recurrence_type = ?, recurrence_interval = ?, recurrence_end = ?,
+		    category = ?, color = ?, all_day = ?
 		WHERE id = ?
 	`
 
@@ -283,6 +334,9 @@ func (db *DB) UpdateEvent(id int, event Event) error {
 		event.RecurrenceType,
 		event.RecurrenceInterval,
 		event.RecurrenceEnd,
+		event.Category,
+		event.Color,
+		allDayInt,
 		id,
 	)
 	if err != nil {

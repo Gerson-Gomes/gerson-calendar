@@ -9,6 +9,7 @@ import (
 
 	"gerson-calendar/database"
 	"gerson-calendar/filemanager"
+	"gerson-calendar/icsexport"
 	"gerson-calendar/icsparser"
 	"gerson-calendar/notifier"
 
@@ -61,17 +62,36 @@ type EventInput struct {
 	RecurrenceType     string `json:"recurrenceType"`
 	RecurrenceInterval int    `json:"recurrenceInterval"`
 	RecurrenceEnd      string `json:"recurrenceEnd"`
+	Category           string `json:"category"`
+	Color              string `json:"color"`
+	AllDay             bool   `json:"allDay"`
+}
+
+func parseEventDates(startStr, endStr string) (time.Time, time.Time, error) {
+	startDate, err := time.Parse(time.RFC3339, startStr)
+	if err != nil {
+		return time.Time{}, time.Time{}, fmt.Errorf("invalid start date: %w", err)
+	}
+	endDate, err := time.Parse(time.RFC3339, endStr)
+	if err != nil {
+		return time.Time{}, time.Time{}, fmt.Errorf("invalid end date: %w", err)
+	}
+	return startDate, endDate, nil
 }
 
 func (a *App) SaveEvent(input EventInput) (int64, error) {
-	startDate, err := time.Parse(time.RFC3339, input.StartDate)
+	startDate, endDate, err := parseEventDates(input.StartDate, input.EndDate)
 	if err != nil {
-		return 0, fmt.Errorf("invalid start date: %w", err)
+		return 0, err
 	}
 
-	endDate, err := time.Parse(time.RFC3339, input.EndDate)
-	if err != nil {
-		return 0, fmt.Errorf("invalid end date: %w", err)
+	category := input.Category
+	if category == "" {
+		category = "default"
+	}
+	color := input.Color
+	if color == "" {
+		color = "#3b82f6"
 	}
 
 	event := database.Event{
@@ -84,6 +104,9 @@ func (a *App) SaveEvent(input EventInput) (int64, error) {
 		RecurrenceType:     input.RecurrenceType,
 		RecurrenceInterval: input.RecurrenceInterval,
 		RecurrenceEnd:      input.RecurrenceEnd,
+		Category:           category,
+		Color:              color,
+		AllDay:             input.AllDay,
 	}
 
 	if input.FilePath != "" {
@@ -116,23 +139,33 @@ func (a *App) DeleteEvent(id int) error {
 }
 
 func (a *App) UpdateEvent(id int, input EventInput) error {
-	startDate, err := time.Parse(time.RFC3339, input.StartDate)
+	startDate, endDate, err := parseEventDates(input.StartDate, input.EndDate)
 	if err != nil {
-		return fmt.Errorf("invalid start date: %w", err)
+		return err
 	}
 
-	endDate, err := time.Parse(time.RFC3339, input.EndDate)
-	if err != nil {
-		return fmt.Errorf("invalid end date: %w", err)
+	category := input.Category
+	if category == "" {
+		category = "default"
+	}
+	color := input.Color
+	if color == "" {
+		color = "#3b82f6"
 	}
 
 	event := database.Event{
-		Title:           input.Title,
-		StartDate:       startDate,
-		EndDate:         endDate,
-		Description:     input.Description,
-		ZoomLink:        input.ZoomLink,
-		ReminderMinutes: input.ReminderMinutes,
+		Title:              input.Title,
+		StartDate:          startDate,
+		EndDate:            endDate,
+		Description:        input.Description,
+		ZoomLink:           input.ZoomLink,
+		ReminderMinutes:    input.ReminderMinutes,
+		RecurrenceType:     input.RecurrenceType,
+		RecurrenceInterval: input.RecurrenceInterval,
+		RecurrenceEnd:      input.RecurrenceEnd,
+		Category:           category,
+		Color:              color,
+		AllDay:             input.AllDay,
 	}
 
 	if input.FilePath != "" {
@@ -184,6 +217,20 @@ func (a *App) ImportICS() (int, error) {
 	}
 
 	return imported, nil
+}
+
+func (a *App) ExportICS() (string, error) {
+	events, err := a.db.GetAllEvents()
+	if err != nil {
+		return "", fmt.Errorf("failed to get events: %w", err)
+	}
+
+	filePath, err := icsexport.ExportToFile(events)
+	if err != nil {
+		return "", err
+	}
+
+	return filePath, nil
 }
 
 func (a *App) OpenFile(filePath string) error {

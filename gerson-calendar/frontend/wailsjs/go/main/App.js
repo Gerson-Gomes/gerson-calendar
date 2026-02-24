@@ -10,6 +10,10 @@ export function DeleteRecurringSeries(arg1) {
   return window['go']['main']['App']['DeleteRecurringSeries'](arg1);
 }
 
+export function ExportICS() {
+  return window['go']['main']['App']['ExportICS']();
+}
+
 export function GetAllEvents() {
   return window['go']['main']['App']['GetAllEvents']();
 }
