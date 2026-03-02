@@ -2,7 +2,7 @@
 
 ## Phase 1: Foundation & Theme Setup
 - [x] Task: Analyze current UI structure and `stitch-assets` image to map component changes. af346f8
-- [ ] Task: Define the new global CSS variables (colors, spacing, typography) in `index.css` or a dedicated theme file.
+- [x] Task: Define the new global CSS variables (colors, spacing, typography) in `index.css` or a dedicated theme file. 995382f
 - [ ] Task: Conductor - User Manual Verification 'Foundation & Theme Setup' (Protocol in workflow.md)
 
 ## Phase 2: Core Layout Refactor (TDD)
