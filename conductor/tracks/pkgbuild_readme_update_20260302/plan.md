@@ -1,13 +1,13 @@
 # Implementation Plan: PKGBUILD and README Update (v2.3.0)
 
-## Phase 1: Update Metadata & Documentation
+## Phase 1: Update Metadata & Documentation [checkpoint: b47d4d9]
 
-- [ ] Task: Update `PKGBUILD` to version 2.3.0
-    - [ ] Read and modify the `pkgver` in `PKGBUILD`.
-    - [ ] Update `pkgrel` to `1` if version changed.
-- [ ] Task: Update `README.md` to mention sidebar features
-    - [ ] Add a new section or paragraph describing the sidebar's role in helping users organize their week.
-- [ ] Task: Conductor - User Manual Verification 'Update Metadata & Documentation' (Protocol in workflow.md)
+- [x] Task: Update `PKGBUILD` to version 2.3.0 98b6b1d
+    - [x] Read and modify the `pkgver` in `PKGBUILD`.
+    - [x] Update `pkgrel` to `1` if version changed.
+- [x] Task: Update `README.md` to mention sidebar features 4ca2f1e
+    - [x] Add a new section or paragraph describing the sidebar's role in helping users organize their week.
+- [x] Task: Conductor - User Manual Verification 'Update Metadata & Documentation' (Protocol in workflow.md) b47d4d9
 
 ## Phase 2: Commit and Push
 
