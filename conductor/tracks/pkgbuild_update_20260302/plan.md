@@ -8,7 +8,7 @@
     - [x] Update `pkgver` to `2.2.0`.
     - [x] Update `pkgrel` to `1`.
     - [x] Run `verify_pkgbuild.sh` and confirm it passes (Green phase).
-- [ ] Task: Conductor - User Manual Verification 'Metadata Update' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Metadata Update' (Protocol in workflow.md)
 
 ## Phase 2: Final Integration & Cleanup
 - [ ] Task: Run a dry-run or lint check on the updated `PKGBUILD`.
