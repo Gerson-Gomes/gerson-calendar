@@ -63,7 +63,9 @@ type EventInput struct {
 	RecurrenceType     string `json:"recurrenceType"`
 	RecurrenceInterval int    `json:"recurrenceInterval"`
 	RecurrenceEnd      string `json:"recurrenceEnd"`
+	RecurrenceDays     string `json:"recurrenceDays"`
 	Category           string `json:"category"`
+
 	Color              string `json:"color"`
 	AllDay             bool   `json:"allDay"`
 }
@@ -105,7 +107,9 @@ func (a *App) SaveEvent(input EventInput) (int64, error) {
 		RecurrenceType:     input.RecurrenceType,
 		RecurrenceInterval: input.RecurrenceInterval,
 		RecurrenceEnd:      input.RecurrenceEnd,
+		RecurrenceDays:     input.RecurrenceDays,
 		Category:           category,
+
 		Color:              color,
 		AllDay:             input.AllDay,
 	}
@@ -171,7 +175,9 @@ func (a *App) UpdateEvent(id int, input EventInput) error {
 		RecurrenceType:     input.RecurrenceType,
 		RecurrenceInterval: input.RecurrenceInterval,
 		RecurrenceEnd:      input.RecurrenceEnd,
+		RecurrenceDays:     input.RecurrenceDays,
 		Category:           category,
+
 		Color:              color,
 		AllDay:             input.AllDay,
 	}
