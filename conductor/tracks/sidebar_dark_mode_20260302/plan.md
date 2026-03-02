@@ -1,6 +1,6 @@
 # Implementation Plan: Sidebar & Dark Mode Enhancements
 
-## Phase 1: Sidebar Filtering Logic
+## Phase 1: Sidebar Filtering Logic [checkpoint: fd85ef9]
 
 - [x] Task: Sidebar Logic Analysis 503e905
     - [x] Identify the sidebar's component responsible for rendering "Upcoming Appointments."
@@ -12,7 +12,7 @@
         - [x] Appointments starting > 60 minutes ago are excluded.
     - [x] **Green Phase**: Implement the filtering logic using a `setInterval` or a timer-based check to ensure the list updates dynamically.
     - [x] **Refactor**: Optimize the filter and ensure it doesn't cause unnecessary re-renders.
-- [ ] Task: Conductor - User Manual Verification 'Sidebar Filtering' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Sidebar Filtering' (Protocol in workflow.md) fd85ef9
 
 ## Phase 2: Dark Mode Readability Fixes
 
