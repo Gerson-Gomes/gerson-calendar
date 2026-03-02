@@ -3,7 +3,7 @@
 ## Phase 1: Backend Implementation (Go)
 - [x] Task: Research and implement an ICS parsing library in Go. a985474
 - [x] Task: Create a service for importing ICS data into the database. 33cb990
-- [ ] Task: Create a service for generating ICS data from database events.
+- [x] Task: Create a service for generating ICS data from database events. 7b6e48d
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Backend Implementation' (Protocol in workflow.md)
 
 ## Phase 2: Wails Integration & Frontend (React)
