@@ -1,9 +1,9 @@
 # Implementation Plan: Modern UI Refactor & Week Appointments
 
-## Phase 1: Foundation & Theme Setup
+## Phase 1: Foundation & Theme Setup [checkpoint: ca7df7b]
 - [x] Task: Analyze current UI structure and `stitch-assets` image to map component changes. af346f8
 - [x] Task: Define the new global CSS variables (colors, spacing, typography) in `index.css` or a dedicated theme file. 995382f
-- [ ] Task: Conductor - User Manual Verification 'Foundation & Theme Setup' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Foundation & Theme Setup' (Protocol in workflow.md) ca7df7b
 
 ## Phase 2: Core Layout Refactor (TDD)
 - [ ] Task: Implement the new Sidebar Navigation layout.
