@@ -16,6 +16,7 @@ A privacy-focused calendar application that runs completely offline on your Linu
 
 ✅ **100% Local** - No internet required, zero data transmission
 ✅ **Event Management** - Create, view, and delete calendar events
+✅ **Sidebar Organization** - Dedicated sidebar with upcoming appointments to help organize your week
 ✅ **File Attachments** - Attach PDFs and documents to events
 ✅ **Zoom Integration** - Quick-join Zoom meetings from events
 ✅ **Native OS Integration** - Uses your default applications to open files
@@ -256,6 +257,12 @@ Search "Gerson Calendar" in your app launcher.
 ---
 
 ## 📜 Changelog
+
+### [2.3.0] - 2026-03-02
+- **New Feature**: Interactive Sidebar with upcoming weekly appointments to help users organize their week.
+- **Improvement**: Updated dark mode theme with higher contrast font colors for better readability during event editing.
+- **Improvement**: Sidebar now automatically filters out events that started more than 1 hour ago for better focus.
+- **Build**: Updated PKGBUILD to 2.3.0.
 
 ### [2.1.1] - 2026-03-01
 - **New Feature**: Robust ICS Import/Export using `github.com/arran4/golang-ical`.
