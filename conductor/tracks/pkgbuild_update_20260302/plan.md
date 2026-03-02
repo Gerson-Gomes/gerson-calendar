@@ -11,7 +11,7 @@
 - [x] Task: Conductor - User Manual Verification 'Metadata Update' (Protocol in workflow.md) 6f8455f
 
 ## Phase 2: Final Integration & Cleanup
-- [ ] Task: Run a dry-run or lint check on the updated `PKGBUILD`.
-    - [ ] Run `namcap PKGBUILD` (if available) or simply check for syntax errors.
+- [x] Task: Run a dry-run or lint check on the updated `PKGBUILD`. f6ca74c
+    - [x] Run `namcap PKGBUILD` (if available) or simply check for syntax errors.
 - [ ] Task: Remove the temporary verification script.
 - [ ] Task: Conductor - User Manual Verification 'Final Integration & Cleanup' (Protocol in workflow.md)
