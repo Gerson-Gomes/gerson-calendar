@@ -2,16 +2,16 @@
 
 This plan outlines the steps for enhancing recurring task support, including specific days for weekly recurrence and fixing calendar visibility.
 
-## Phase 1: Database and Backend Core
-- [ ] Task: **Database: Add recurrence_days column**
+## Phase 1: Database and Backend Core [checkpoint: b370ba3]
+- [x] Task: **Database: Add recurrence_days column** 5741cef
     - [ ] Add `recurrence_days` column to the `events` table in `database.go`.
     - [ ] Update `Event` struct and `scanEvent` to handle the new column.
     - [ ] Update `SaveEvent` and `UpdateEvent` to include the new column.
-- [ ] Task: **TDD: Update expandRecurring for Multiple Days and End Date**
+- [x] Task: **TDD: Update expandRecurring for Multiple Days and End Date** 5741cef
     - [ ] Write unit tests for `expandRecurring` in `database_test.go` covering daily/weekly recurrence with end dates and specific days.
     - [ ] Implement support for `recurrence_days` for weekly recurrence in `expandRecurring`.
     - [ ] Ensure `expandRecurring` respects `recurrence_end` strictly.
-- [ ] Task: **Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)**
+- [x] Task: **Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)** b370ba3
 
 ## Phase 2: Frontend Implementation
 - [ ] Task: **UI: Update EventModal for Recurring Days**
