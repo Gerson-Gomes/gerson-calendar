@@ -5,7 +5,7 @@
 - [x] Task: Define the new global CSS variables (colors, spacing, typography) in `index.css` or a dedicated theme file. 995382f
 - [x] Task: Conductor - User Manual Verification 'Foundation & Theme Setup' (Protocol in workflow.md) ca7df7b
 
-## Phase 2: Core Layout Refactor (TDD)
+## Phase 2: Core Layout Refactor (TDD) [checkpoint: 9d1535d]
 - [x] Task: Implement the new Sidebar Navigation layout. 573a6d9
     - [x] Write failing tests for the new Sidebar component structure and navigation links.
     - [x] Implement the Sidebar component with modern styling and responsive behavior.
@@ -14,7 +14,7 @@
     - [x] Write failing tests for the updated layout grid/flex structure.
     - [x] Implement the new shell layout, ensuring smooth transitions between views.
     - [x] Verify tests pass.
-- [~] Task: Conductor - User Manual Verification 'Core Layout Refactor' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Core Layout Refactor' (Protocol in workflow.md) 9d1535d
 
 ## Phase 3: Weekly Appointments Feature (TDD)
 - [ ] Task: Implement backend logic for fetching the current week's appointments.
