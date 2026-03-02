@@ -186,6 +186,12 @@ body,
   background: var(--bg-hover);
 }
 
+.fc-direction-ltr .fc-button-group>.fc-button:not(:last-child) {
+  border-bottom-right-radius: 0px;
+  border-top-right-radius: 0px;
+  margin-right: 7px;
+}
+
 .fc-event {
   cursor: pointer;
   border: none !important;
