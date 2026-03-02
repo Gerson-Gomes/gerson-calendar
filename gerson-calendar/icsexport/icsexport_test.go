@@ -12,12 +12,12 @@ import (
 func TestExportToFile_Comprehensive(t *testing.T) {
 	events := []database.Event{
 		{
-			ID:        1,
-			Title:     "Standard Event",
-			StartDate: time.Date(2025, 1, 1, 12, 0, 0, 0, time.UTC),
-			EndDate:   time.Date(2025, 1, 1, 13, 0, 0, 0, time.UTC),
+			ID:          1,
+			Title:       "Standard Event",
+			StartDate:   time.Date(2025, 1, 1, 12, 0, 0, 0, time.UTC),
+			EndDate:     time.Date(2025, 1, 1, 13, 0, 0, 0, time.UTC),
 			Description: "Desc",
-			ZoomLink: "https://zoom.us/j/1",
+			ZoomLink:    "https://zoom.us/j/1",
 		},
 		{
 			ID:        2,
@@ -27,23 +27,23 @@ func TestExportToFile_Comprehensive(t *testing.T) {
 			AllDay:    true,
 		},
 		{
-			ID:        3,
-			Title:     "Recurring Event",
-			StartDate: time.Date(2025, 1, 3, 10, 0, 0, 0, time.UTC),
-			EndDate:   time.Date(2025, 1, 3, 11, 0, 0, 0, time.UTC),
-			RecurrenceType: "weekly",
+			ID:                 3,
+			Title:              "Recurring Event",
+			StartDate:          time.Date(2025, 1, 3, 10, 0, 0, 0, time.UTC),
+			EndDate:            time.Date(2025, 1, 3, 11, 0, 0, 0, time.UTC),
+			RecurrenceType:     "weekly",
 			RecurrenceInterval: 2,
-			RecurrenceEnd: "2025-12-31",
+			RecurrenceEnd:      "2025-12-31",
 		},
 		{
-			ID:        4,
-			Title:     "Event with Alarm",
-			StartDate: time.Date(2025, 1, 4, 10, 0, 0, 0, time.UTC),
-			EndDate:   time.Date(2025, 1, 4, 11, 0, 0, 0, time.UTC),
+			ID:              4,
+			Title:           "Event with Alarm",
+			StartDate:       time.Date(2025, 1, 4, 10, 0, 0, 0, time.UTC),
+			EndDate:         time.Date(2025, 1, 4, 11, 0, 0, 0, time.UTC),
 			ReminderMinutes: 15,
 		},
 		{
-			ID: 1, // Duplicate ID
+			ID:    1, // Duplicate ID
 			Title: "Duplicate",
 		},
 	}
@@ -60,7 +60,7 @@ func TestExportToFile_Comprehensive(t *testing.T) {
 	}
 
 	sContent := string(content)
-	
+
 	checks := []string{
 		"SUMMARY:Standard Event",
 		"URL:https://zoom.us/j/1",
