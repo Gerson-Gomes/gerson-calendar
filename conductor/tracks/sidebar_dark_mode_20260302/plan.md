@@ -2,23 +2,23 @@
 
 ## Phase 1: Sidebar Filtering Logic
 
-- [ ] Task: Sidebar Logic Analysis
-    - [ ] Identify the sidebar's component responsible for rendering "Upcoming Appointments."
-    - [ ] Locate the logic where appointments are fetched or filtered.
-- [ ] Task: TDD - Sidebar Filtering (React/TypeScript)
-    - [ ] **Write Tests**: Create a unit test for the `UpcomingAppointments` component (or its filtering hook) using Vitest.
-    - [ ] **Red Phase**: Define tests for:
-        - [ ] Current/Future appointments are displayed.
-        - [ ] Appointments starting > 60 minutes ago are excluded.
-    - [ ] **Green Phase**: Implement the filtering logic using a `setInterval` or a timer-based check to ensure the list updates dynamically.
-    - [ ] **Refactor**: Optimize the filter and ensure it doesn't cause unnecessary re-renders.
+- [x] Task: Sidebar Logic Analysis 503e905
+    - [x] Identify the sidebar's component responsible for rendering "Upcoming Appointments."
+    - [x] Locate the logic where appointments are fetched or filtered.
+- [x] Task: TDD - Sidebar Filtering (React/TypeScript) 53029cb
+    - [x] **Write Tests**: Create a unit test for the `UpcomingAppointments` component (or its filtering hook) using Vitest.
+    - [x] **Red Phase**: Define tests for:
+        - [x] Current/Future appointments are displayed.
+        - [x] Appointments starting > 60 minutes ago are excluded.
+    - [x] **Green Phase**: Implement the filtering logic using a `setInterval` or a timer-based check to ensure the list updates dynamically.
+    - [x] **Refactor**: Optimize the filter and ensure it doesn't cause unnecessary re-renders.
 - [ ] Task: Conductor - User Manual Verification 'Sidebar Filtering' (Protocol in workflow.md)
 
 ## Phase 2: Dark Mode Readability Fixes
 
-- [ ] Task: Dark Mode CSS Analysis
-    - [ ] Identify the CSS classes used for the Edit Task modal/form in dark mode.
-    - [ ] Pinpoint the specific elements (labels, input fields) with low contrast.
+- [x] Task: Dark Mode CSS Analysis 503e905
+    - [x] Identify the CSS classes used for the Edit Task modal/form in dark mode.
+    - [x] Pinpoint the specific elements (labels, input fields) with low contrast.
 - [ ] Task: TDD - CSS/Readability (Visual/Code)
     - [ ] **Write Tests**: Since this is visual, create or update a snapshot/visual regression test if available, or a unit test to verify the correct CSS classes are applied in dark mode.
     - [ ] **Red Phase**: Confirm that dark mode classes result in the problematic font colors.
