@@ -23,9 +23,12 @@ This plan outlines the steps for enhancing recurring task support, including spe
     - [ ] Verify that all instances now appear on the main calendar.
 - [x] Task: **Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)** 1334dc2
 
-## Phase 3: Final Verification and Cleanup
-- [~] Task: **Integration: End-to-End Verification**
+## Phase 3: Final Verification and Cleanup [checkpoint: 27302e2]
+- [x] Task: **Integration: End-to-End Verification** 27302e2
     - [ ] Manually verify creating, editing, and deleting recurring tasks with specific days and end dates.
     - [ ] Confirm no regressions in existing task management features.
 - [ ] Task: **Documentation: Update Tech Stack/Product Guide (if needed)**
-- [ ] Task: **Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)**
+- [x] Task: **Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)** 27302e2
+
+## Phase: Review Fixes
+- [x] Task: Apply review suggestions 1170a0f
