@@ -6,11 +6,11 @@
     - [x] Confirm margins have been added to top buttons as described
 - [x] Task: Conductor - User Manual Verification 'Phase 1' (79bfce3)
 
-## Phase 2: Build Generation
-- [ ] Task: Execute Wails build
-    - [ ] Run `wails build` from the `gerson-calendar/` directory for Linux
-    - [ ] Verify the build output (binary) exists in the expected directory
-- [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
+## Phase 2: Build Generation [checkpoint: 250d2bd]
+- [x] Task: Execute Wails build (no commit)
+    - [x] Run `wails build` from the `gerson-calendar/` directory for Linux
+    - [x] Verify the build output (binary) exists in the expected directory
+- [x] Task: Conductor - User Manual Verification 'Phase 2' (250d2bd)
 
 ## Phase 3: Final Verification
 - [ ] Task: Manual UI verification
