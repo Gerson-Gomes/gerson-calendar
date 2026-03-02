@@ -66,8 +66,8 @@ type EventInput struct {
 	RecurrenceDays     string `json:"recurrenceDays"`
 	Category           string `json:"category"`
 
-	Color              string `json:"color"`
-	AllDay             bool   `json:"allDay"`
+	Color  string `json:"color"`
+	AllDay bool   `json:"allDay"`
 }
 
 func parseEventDates(startStr, endStr string) (time.Time, time.Time, error) {
@@ -110,8 +110,8 @@ func (a *App) SaveEvent(input EventInput) (int64, error) {
 		RecurrenceDays:     input.RecurrenceDays,
 		Category:           category,
 
-		Color:              color,
-		AllDay:             input.AllDay,
+		Color:  color,
+		AllDay: input.AllDay,
 	}
 
 	if input.FilePath != "" {
@@ -178,8 +178,8 @@ func (a *App) UpdateEvent(id int, input EventInput) error {
 		RecurrenceDays:     input.RecurrenceDays,
 		Category:           category,
 
-		Color:              color,
-		AllDay:             input.AllDay,
+		Color:  color,
+		AllDay: input.AllDay,
 	}
 
 	if input.FilePath != "" {

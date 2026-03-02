@@ -53,11 +53,16 @@ function formatDateTime(iso: string, allDay?: boolean): string {
   });
 }
 
-function formatRecurrence(type: string, interval: number, end: string): string {
+function formatRecurrence(type: string, interval: number, end: string, days?: string): string {
   if (!type || type === 'none') return '';
   const unit = type === 'daily' ? 'day' : type === 'weekly' ? 'week' : type === 'monthly' ? 'month' : 'year';
   const plural = interval > 1 ? `${interval} ${unit}s` : unit;
   let str = `Every ${plural}`;
+  if (type === 'weekly' && days) {
+    const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const selected = days.split(',').map((d) => dayNames[parseInt(d)]).join(', ');
+    str += ` on ${selected}`;
+  }
   if (end) str += ` until ${end}`;
   return str;
 }
@@ -176,7 +181,7 @@ export function EventDetail({ event, onClose, onDelete, onDeleteSeries, onEdit, 
             <div className="detail-row">
               <span className="detail-label">Repeats</span>
               <span className="detail-value">
-                {formatRecurrence(event.recurrenceType, event.recurrenceInterval, event.recurrenceEnd)}
+                {formatRecurrence(event.recurrenceType, event.recurrenceInterval, event.recurrenceEnd, event.recurrenceDays)}
               </span>
             </div>
           )}

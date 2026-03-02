@@ -79,89 +79,88 @@ func TestGetWeekEvents(t *testing.T) {
 		t.Error("Today Event not found in week events")
 	}
 	if !foundRecurring {
-	        t.Error("Recurring Weekly not found in week events")
+		t.Error("Recurring Weekly not found in week events")
 	}
-	}
+}
 
-	func TestExpandRecurring(t *testing.T) {
+func TestExpandRecurring(t *testing.T) {
 	// Mock data
 	start := time.Date(2024, 3, 1, 10, 0, 0, 0, time.UTC) // Friday
 	duration := time.Hour
 
 	tests := []struct {
-	        name           string
-	        event          Event
-	        expectedCount  int
-	        expectedDates  []time.Time
+		name          string
+		event         Event
+		expectedCount int
+		expectedDates []time.Time
 	}{
-	        {
-	                name: "Daily Recurrence 3 times",
-	                event: Event{
-	                        Title:              "Daily",
-	                        StartDate:          start,
-	                        EndDate:            start.Add(duration),
-	                        RecurrenceType:     "daily",
-	                        RecurrenceInterval: 1,
-	                        RecurrenceEnd:      "2024-03-03",
-	                },
-	                expectedCount: 3, // Mar 1, 2, 3
-	                expectedDates: []time.Time{
-	                        start,
-	                        start.AddDate(0, 0, 1),
-	                        start.AddDate(0, 0, 2),
-	                },
-	        },
-	        {
-	                name: "Weekly Recurrence Specific Days (Tue, Thu)",
-	                event: Event{
-	                        Title:              "Weekly Tue-Thu",
-	                        StartDate:          start, // Mar 1 (Fri) - base should be included but not match days
-	                        EndDate:            start.Add(duration),
-	                        RecurrenceType:     "weekly",
-	                        RecurrenceInterval: 1,
-	                        RecurrenceDays:     "2,4",        // Tue, Thu
-	                        RecurrenceEnd:      "2024-03-10", // Should get Mar 1 (base), Mar 5 (Tue), Mar 7 (Thu)
-	                },
-	                expectedCount: 3,
-	                expectedDates: []time.Time{
-	                        start,
-	                        time.Date(2024, 3, 5, 10, 0, 0, 0, time.UTC),
-	                        time.Date(2024, 3, 7, 10, 0, 0, 0, time.UTC),
-	                },
-	        },
-	        {
-	                name: "Weekly Recurrence Stops exactly on End Date",
-	                event: Event{
-	                        Title:              "End Date Check",
-	                        StartDate:          start, // Mar 1 (Fri)
-	                        EndDate:            start.Add(duration),
-	                        RecurrenceType:     "weekly",
-	                        RecurrenceInterval: 1,
-	                        RecurrenceEnd:      "2024-03-08", // Next Friday
-	                },
-	                expectedCount: 2, // Mar 1, Mar 8
-	                expectedDates: []time.Time{
-	                        start,
-	                        start.AddDate(0, 0, 7),
-	                },
-	        },
+		{
+			name: "Daily Recurrence 3 times",
+			event: Event{
+				Title:              "Daily",
+				StartDate:          start,
+				EndDate:            start.Add(duration),
+				RecurrenceType:     "daily",
+				RecurrenceInterval: 1,
+				RecurrenceEnd:      "2024-03-03",
+			},
+			expectedCount: 3, // Mar 1, 2, 3
+			expectedDates: []time.Time{
+				start,
+				start.AddDate(0, 0, 1),
+				start.AddDate(0, 0, 2),
+			},
+		},
+		{
+			name: "Weekly Recurrence Specific Days (Tue, Thu)",
+			event: Event{
+				Title:              "Weekly Tue-Thu",
+				StartDate:          start, // Mar 1 (Fri) - base should be included but not match days
+				EndDate:            start.Add(duration),
+				RecurrenceType:     "weekly",
+				RecurrenceInterval: 1,
+				RecurrenceDays:     "2,4",        // Tue, Thu
+				RecurrenceEnd:      "2024-03-10", // Should get Mar 1 (base), Mar 5 (Tue), Mar 7 (Thu)
+			},
+			expectedCount: 3,
+			expectedDates: []time.Time{
+				start,
+				time.Date(2024, 3, 5, 10, 0, 0, 0, time.UTC),
+				time.Date(2024, 3, 7, 10, 0, 0, 0, time.UTC),
+			},
+		},
+		{
+			name: "Weekly Recurrence Stops exactly on End Date",
+			event: Event{
+				Title:              "End Date Check",
+				StartDate:          start, // Mar 1 (Fri)
+				EndDate:            start.Add(duration),
+				RecurrenceType:     "weekly",
+				RecurrenceInterval: 1,
+				RecurrenceEnd:      "2024-03-08", // Next Friday
+			},
+			expectedCount: 2, // Mar 1, Mar 8
+			expectedDates: []time.Time{
+				start,
+				start.AddDate(0, 0, 7),
+			},
+		},
 	}
 
 	for _, tt := range tests {
-	        t.Run(tt.name, func(t *testing.T) {
-	                events := []Event{tt.event}
-	                expanded := expandRecurring(events)
+		t.Run(tt.name, func(t *testing.T) {
+			events := []Event{tt.event}
+			expanded := expandRecurring(events)
 
-	                if len(expanded) != tt.expectedCount {
-	                        t.Errorf("Expected %d instances, got %d", tt.expectedCount, len(expanded))
-	                }
+			if len(expanded) != tt.expectedCount {
+				t.Errorf("Expected %d instances, got %d", tt.expectedCount, len(expanded))
+			}
 
-	                for i, expectedDate := range tt.expectedDates {
-	                        if i < len(expanded) && !expanded[i].StartDate.Equal(expectedDate) {
-	                                t.Errorf("Instance %d: expected date %v, got %v", i, expectedDate, expanded[i].StartDate)
-	                        }
-	                }
-	        })
+			for i, expectedDate := range tt.expectedDates {
+				if i < len(expanded) && !expanded[i].StartDate.Equal(expectedDate) {
+					t.Errorf("Instance %d: expected date %v, got %v", i, expectedDate, expanded[i].StartDate)
+				}
+			}
+		})
 	}
-	}
-
+}
