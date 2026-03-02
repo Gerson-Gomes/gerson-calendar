@@ -14,7 +14,7 @@
     - [x] **Refactor**: Optimize the filter and ensure it doesn't cause unnecessary re-renders.
 - [x] Task: Conductor - User Manual Verification 'Sidebar Filtering' (Protocol in workflow.md) fd85ef9
 
-## Phase 2: Dark Mode Readability Fixes
+## Phase 2: Dark Mode Readability Fixes [checkpoint: a95dda1]
 
 - [x] Task: Dark Mode CSS Analysis 503e905
     - [x] Identify the CSS classes used for the Edit Task modal/form in dark mode.
@@ -24,11 +24,11 @@
     - [x] **Red Phase**: Confirm that dark mode classes result in the problematic font colors.
     - [x] **Green Phase**: Update Vanilla CSS to provide high-contrast font colors (e.g., `#FFFFFF` or a light gray for text on dark backgrounds) within the Edit Task context.
     - [x] **Refactor**: Consolidate these style fixes into the main dark mode stylesheet or component-specific CSS.
-- [ ] Task: Conductor - User Manual Verification 'Dark Mode Readability' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Dark Mode Readability' (Protocol in workflow.md) a95dda1
 
-## Phase 3: Final Integration & Review
+## Phase 3: Final Integration & Review [checkpoint: 5a7b1c2]
 
-- [ ] Task: Final Quality Gate Check
-    - [ ] Verify both sidebar filtering and dark mode readability in a unified build.
-    - [ ] Ensure no regressions in the task editing flow.
-- [ ] Task: Conductor - User Manual Verification 'Final Integration' (Protocol in workflow.md)
+- [x] Task: Final Quality Gate Check 53029cb
+    - [x] Verify both sidebar filtering and dark mode readability in a unified build.
+    - [x] Ensure no regressions in the task editing flow.
+- [x] Task: Conductor - User Manual Verification 'Final Integration' (Protocol in workflow.md) 5a7b1c2

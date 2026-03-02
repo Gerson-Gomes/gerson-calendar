@@ -22,7 +22,7 @@ interface CalendarEvent {
   recurrenceType: string;
   recurrenceInterval: number;
   recurrenceEnd: string;
-  recurrenceDays: string;
+  recurrenceDays?: string;
   category: string;
   color: string;
   allDay: boolean;
@@ -255,7 +255,7 @@ function App() {
         recurrenceType: base.recurrenceType,
         recurrenceInterval: base.recurrenceInterval,
         recurrenceEnd: base.recurrenceEnd,
-        recurrenceDays: base.recurrenceDays,
+        recurrenceDays: base.recurrenceDays ?? '',
         category: base.category,
         color: base.color,
         allDay: event.allDay,
