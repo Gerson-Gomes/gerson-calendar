@@ -262,3 +262,25 @@
   border-color: var(--accent);
   color: white;
 }
+
+[data-theme="dark"] .form-group input,
+[data-theme="dark"] .form-group textarea,
+[data-theme="dark"] .reminder-select {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .form-group label {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .modal-content {
+  background: var(--bg-surface);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .color-picker {
+  background: var(--bg-surface) !important;
+  border-color: var(--border-color) !important;
+}
