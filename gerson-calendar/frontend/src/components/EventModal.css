@@ -229,3 +229,36 @@
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }
+
+.days-checkbox-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.day-checkbox {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-secondary);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition-fast);
+}
+
+.day-checkbox:hover {
+  border-color: var(--accent);
+  color: var(--text-primary);
+}
+
+.day-checkbox.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}

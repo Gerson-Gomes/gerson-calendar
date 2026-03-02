@@ -22,6 +22,7 @@ export interface EventFormData {
   recurrenceType: string;
   recurrenceInterval: number;
   recurrenceEnd: string;
+  recurrenceDays: string;
   category: string;
   color: string;
   allDay: boolean;
@@ -41,6 +42,16 @@ export const CATEGORY_COLORS: Record<string, string> = {
   Other: '#6b7280',
 };
 
+const DAYS = [
+  { label: 'S', value: 0 },
+  { label: 'M', value: 1 },
+  { label: 'T', value: 2 },
+  { label: 'W', value: 3 },
+  { label: 'T', value: 4 },
+  { label: 'F', value: 5 },
+  { label: 'S', value: 6 },
+];
+
 export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, editEvent }: EventModalProps) {
   const [title, setTitle] = useState('');
   const [startDate, setStartDate] = useState('');
@@ -55,6 +66,7 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
   const [recurrenceType, setRecurrenceType] = useState('none');
   const [recurrenceInterval, setRecurrenceInterval] = useState(1);
   const [recurrenceEnd, setRecurrenceEnd] = useState('');
+  const [recurrenceDays, setRecurrenceDays] = useState<string>('');
   const [category, setCategory] = useState('default');
   const [color, setColor] = useState('#3b82f6');
   const [allDay, setAllDay] = useState(false);
@@ -104,6 +116,7 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
       setRecurrenceType(editEvent.recurrenceType || 'none');
       setRecurrenceInterval(editEvent.recurrenceInterval || 1);
       setRecurrenceEnd(editEvent.recurrenceEnd || '');
+      setRecurrenceDays(editEvent.recurrenceDays || '');
       const cat = editEvent.category || 'default';
       setCategory(cat);
       setColor(editEvent.color || CATEGORY_COLORS[cat] || '#3b82f6');
@@ -119,6 +132,17 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
   const handleCategoryChange = (newCategory: string) => {
     setCategory(newCategory);
     setColor(CATEGORY_COLORS[newCategory] || '#3b82f6');
+  };
+
+  const handleDayToggle = (day: number) => {
+    const days = recurrenceDays ? recurrenceDays.split(',').map(Number) : [];
+    const index = days.indexOf(day);
+    if (index === -1) {
+      days.push(day);
+    } else {
+      days.splice(index, 1);
+    }
+    setRecurrenceDays(days.sort().join(','));
   };
 
   const handleAllDayToggle = (checked: boolean) => {
@@ -192,6 +216,7 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
         recurrenceType,
         recurrenceInterval,
         recurrenceEnd,
+        recurrenceDays,
         category,
         color,
         allDay,
@@ -226,6 +251,7 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
     setRecurrenceType('none');
     setRecurrenceInterval(1);
     setRecurrenceEnd('');
+    setRecurrenceDays('');
     setCategory('default');
     setColor('#3b82f6');
     setAllDay(false);
@@ -454,6 +480,28 @@ export function EventModal({ isOpen, onClose, onSave, onUpdate, selectedDate, ed
               <option value="yearly">Yearly</option>
             </select>
           </div>
+
+          {recurrenceType === 'weekly' && (
+            <div className="form-group">
+              <label>Repeat on</label>
+              <div className="days-checkbox-group">
+                {DAYS.map((day) => {
+                  const isChecked = recurrenceDays.split(',').includes(day.value.toString());
+                  return (
+                    <button
+                      key={day.value}
+                      type="button"
+                      className={`day-checkbox ${isChecked ? 'active' : ''}`}
+                      onClick={() => handleDayToggle(day.value)}
+                      title={['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day.value]}
+                    >
+                      {day.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           {recurrenceType !== 'none' && (
             <div className="form-row">

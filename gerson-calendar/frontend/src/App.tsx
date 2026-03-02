@@ -22,6 +22,7 @@ interface CalendarEvent {
   recurrenceType: string;
   recurrenceInterval: number;
   recurrenceEnd: string;
+  recurrenceDays: string;
   category: string;
   color: string;
   allDay: boolean;
@@ -155,8 +156,9 @@ function App() {
   };
 
   const handleEventClick = (clickInfo: { event: { id: string; extendedProps: Record<string, unknown> } }) => {
-    const { id, extendedProps } = clickInfo.event;
-    const base = events.find(e => e.id === parseInt(id));
+    const { extendedProps } = clickInfo.event;
+    const dbId = extendedProps.dbId as number;
+    const base = events.find(e => e.id === dbId);
     if (!base) return;
 
     setDetailEvent({
@@ -172,6 +174,7 @@ function App() {
       recurrenceType: (extendedProps.recurrenceType as string) ?? base.recurrenceType,
       recurrenceInterval: (extendedProps.recurrenceInterval as number) ?? base.recurrenceInterval,
       recurrenceEnd: (extendedProps.recurrenceEnd as string) ?? base.recurrenceEnd,
+      recurrenceDays: (extendedProps.recurrenceDays as string) ?? base.recurrenceDays,
       category: (extendedProps.category as string) ?? base.category,
       color: (extendedProps.color as string) ?? base.color,
       allDay: (extendedProps.allDay as boolean) ?? base.allDay,
@@ -212,6 +215,7 @@ function App() {
       recurrenceType: event.recurrenceType,
       recurrenceInterval: event.recurrenceInterval,
       recurrenceEnd: event.recurrenceEnd,
+      recurrenceDays: event.recurrenceDays,
       category: event.category,
       color: event.color,
       allDay: event.allDay,
@@ -228,11 +232,12 @@ function App() {
   };
 
   const handleEventDrop = async (dropInfo: {
-    event: { id: string; start: Date | null; end: Date | null; allDay: boolean };
+    event: { id: string; start: Date | null; end: Date | null; allDay: boolean; extendedProps: Record<string, any> };
     revert: () => void;
   }) => {
     const { event, revert } = dropInfo;
-    const base = events.find(e => e.id === parseInt(event.id));
+    const dbId = event.extendedProps.dbId as number;
+    const base = events.find(e => e.id === dbId);
     if (!base || !event.start) { revert(); return; }
 
     const newStart = event.start;
@@ -250,11 +255,12 @@ function App() {
         recurrenceType: base.recurrenceType,
         recurrenceInterval: base.recurrenceInterval,
         recurrenceEnd: base.recurrenceEnd,
+        recurrenceDays: base.recurrenceDays,
         category: base.category,
         color: base.color,
         allDay: event.allDay,
       };
-      await UpdateEvent(parseInt(event.id), formData);
+      await UpdateEvent(dbId, formData);
       await loadEvents();
     } catch {
       revert();
@@ -270,7 +276,7 @@ function App() {
     : events;
 
   const calendarEvents = filteredEvents.map(event => ({
-    id: event.id.toString(),
+    id: `${event.id}-${event.startDate}`,
     title: event.title,
     start: event.startDate,
     end: event.endDate,
@@ -278,6 +284,7 @@ function App() {
     backgroundColor: event.color || '#3b82f6',
     borderColor: event.color || '#3b82f6',
     extendedProps: {
+      dbId: event.id,
       description: event.description,
       filePath: event.filePath,
       fileName: event.fileName,
@@ -286,6 +293,7 @@ function App() {
       recurrenceType: event.recurrenceType,
       recurrenceInterval: event.recurrenceInterval,
       recurrenceEnd: event.recurrenceEnd,
+      recurrenceDays: event.recurrenceDays,
       category: event.category,
       color: event.color,
       allDay: event.allDay,

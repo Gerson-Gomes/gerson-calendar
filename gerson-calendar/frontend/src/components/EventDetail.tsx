@@ -13,6 +13,7 @@ export interface EventDetailData {
   recurrenceType: string;
   recurrenceInterval: number;
   recurrenceEnd: string;
+  recurrenceDays: string;
   category: string;
   color: string;
   allDay: boolean;
