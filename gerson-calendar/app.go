@@ -135,6 +135,13 @@ func (a *App) GetAllEvents() ([]database.Event, error) {
 	return events, nil
 }
 
+func (a *App) GetWeekEvents() ([]database.Event, error) {
+	events, err := a.db.GetWeekEvents()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get weekly events: %w", err)
+	}
+	return events, nil
+}
 func (a *App) DeleteEvent(id int) error {
 	return a.db.DeleteEvent(id)
 }

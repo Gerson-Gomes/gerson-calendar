@@ -413,6 +413,32 @@ func (db *DB) GetUpcomingReminders(withinMinutes int) ([]Event, error) {
 	return events, nil
 }
 
+func (db *DB) GetWeekEvents() ([]Event, error) {
+	// Fetch all events to account for expanded recurring ones
+	allEvents, err := db.GetAllEvents()
+	if err != nil {
+		return nil, err
+	}
+
+	now := time.Now()
+	// Find the start of the current week (Sunday)
+	offset := int(now.Weekday())
+	startOfWeek := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()).AddDate(0, 0, -offset)
+	endOfWeek := startOfWeek.AddDate(0, 0, 7).Add(-time.Second)
+
+	var weekEvents []Event
+	for _, e := range allEvents {
+		// Include event if it overlaps with the current week range
+		if (e.StartDate.After(startOfWeek) || e.StartDate.Equal(startOfWeek)) && (e.StartDate.Before(endOfWeek) || e.StartDate.Equal(endOfWeek)) {
+			weekEvents = append(weekEvents, e)
+		} else if (e.EndDate.After(startOfWeek) || e.EndDate.Equal(startOfWeek)) && (e.EndDate.Before(endOfWeek) || e.EndDate.Equal(endOfWeek)) {
+			weekEvents = append(weekEvents, e)
+		}
+	}
+
+	return weekEvents, nil
+}
+
 func (db *DB) Close() error {
 	return db.conn.Close()
 }
