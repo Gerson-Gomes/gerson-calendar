@@ -18,6 +18,10 @@ export function GetAllEvents() {
   return window['go']['main']['App']['GetAllEvents']();
 }
 
+export function GetWeekEvents() {
+  return window['go']['main']['App']['GetWeekEvents']();
+}
+
 export function ImportICS() {
   return window['go']['main']['App']['ImportICS']();
 }

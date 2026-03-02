@@ -11,6 +11,8 @@ export function ExportICS():Promise<string>;
 
 export function GetAllEvents():Promise<Array<database.Event>>;
 
+export function GetWeekEvents():Promise<Array<database.Event>>;
+
 export function ImportICS():Promise<number>;
 
 export function OpenFile(arg1:string):Promise<void>;
