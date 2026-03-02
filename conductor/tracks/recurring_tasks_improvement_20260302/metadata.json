@@ -1,0 +1,8 @@
+{
+  "track_id": "recurring_tasks_improvement_20260302",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-03-02T10:00:00Z",
+  "updated_at": "2026-03-02T10:00:00Z",
+  "description": "add a new feature the allow me to schedule weekly tasks util a end date. Right now when I edit a task to repeat, it doesn't actually appear on the calendar"
+}
