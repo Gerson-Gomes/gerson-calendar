@@ -16,8 +16,8 @@ git_parent*.txt
 !VERIFICATION_REPORT.md
 !PROJECT_COMPLETE.md
 !QUICK_REFERENCE.md
-!conductor/*.md
-!gerson-calendar/*.md
+!conductor/**/*.md
+!gerson-calendar/**/*.md
 !gerson-calendar/frontend/*.md
 !gerson-calendar/frontend/src/*.md
 !gerson-calendar/frontend/src/components/*.md

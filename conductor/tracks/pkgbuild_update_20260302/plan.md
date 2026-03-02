@@ -1,0 +1,17 @@
+# Implementation Plan: PKGBUILD Version Update (2.2.0)
+
+## Phase 1: Metadata Update
+- [ ] Task: Create a verification script to check `PKGBUILD` metadata.
+    - [ ] Write a script `verify_pkgbuild.sh` that checks for `pkgver=2.2.0` and `pkgrel=1`.
+    - [ ] Run the script and confirm it fails (Red phase).
+- [ ] Task: Update `PKGBUILD` file with new version and release info.
+    - [ ] Update `pkgver` to `2.2.0`.
+    - [ ] Update `pkgrel` to `1`.
+    - [ ] Run `verify_pkgbuild.sh` and confirm it passes (Green phase).
+- [ ] Task: Conductor - User Manual Verification 'Metadata Update' (Protocol in workflow.md)
+
+## Phase 2: Final Integration & Cleanup
+- [ ] Task: Run a dry-run or lint check on the updated `PKGBUILD`.
+    - [ ] Run `namcap PKGBUILD` (if available) or simply check for syntax errors.
+- [ ] Task: Remove the temporary verification script.
+- [ ] Task: Conductor - User Manual Verification 'Final Integration & Cleanup' (Protocol in workflow.md)
