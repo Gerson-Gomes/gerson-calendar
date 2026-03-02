@@ -21,10 +21,10 @@
     - [x] Write failing Go tests in `database/database_test.go` (or similar) for a "GetWeekEvents" function.
     - [x] Implement the Go function to query SQLite for events within the current 7-day range.
     - [x] Verify Go tests pass.
-- [ ] Task: Create the "Upcoming Appointments" frontend component.
-    - [ ] Write failing React tests for the `UpcomingAppointments` component.
-    - [ ] Implement the component to display the list of events, styled according to the modern design.
-    - [ ] Verify React tests pass.
+- [x] Task: Create the "Upcoming Appointments" frontend component. 660940a
+    - [x] Write failing React tests for the `UpcomingAppointments` component.
+    - [x] Implement the component to display the list of events, styled according to the modern design.
+    - [x] Verify React tests pass.
 - [ ] Task: Conductor - User Manual Verification 'Weekly Appointments Feature' (Protocol in workflow.md)
 
 ## Phase 4: Visual Polish & Component Updates (TDD)
