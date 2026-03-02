@@ -19,6 +19,7 @@ Gerson Calendar is a privacy-focused, local-first calendar application designed 
 ## Key Features
 - **Local Storage (SQLite)**: Robust and reliable local data management for all calendar events.
 - **Desktop Integration**: Deep integration with the Linux desktop, including native notifications and file management.
+- **ICS Import/Export**: Support for importing and exporting calendar data in the standard iCalendar (ICS) format for interoperability.
 - **Event Management**: Core calendar functionality to create, view, and manage events.
 - **File Attachments**: Ability to attach PDFs and other documents to calendar events.
 

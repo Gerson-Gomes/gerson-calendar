@@ -16,6 +16,9 @@ This document outlines the core technologies used in Gerson Calendar.
 ## Database
 - **SQLite**: A lightweight, file-based database used for persistent local storage of calendar events and data.
 
+## External Libraries
+- **github.com/arran4/golang-ical**: A robust iCalendar library for Go, used for parsing and generating ICS data.
+
 ## Build & Distribution
 - **Wails CLI**: Used for development, testing, and building the final application binary.
 - **Custom Scripts**: `build.sh` and `verify.sh` for project-specific automation.
