@@ -53,6 +53,14 @@ func Initialize() (*DB, error) {
 	}
 
 	dbPath := filepath.Join(dataDir, "calendar.db")
+	return InitializeDB(dbPath)
+}
+
+func InitializeTestDB(dbPath string) (*DB, error) {
+	return InitializeDB(dbPath)
+}
+
+func InitializeDB(dbPath string) (*DB, error) {
 	conn, err := sql.Open("sqlite3", dbPath)
 	if err != nil {
 		return nil, fmt.Errorf("failed to open database: %w", err)
