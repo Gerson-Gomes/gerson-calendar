@@ -15,6 +15,7 @@ export namespace database {
 	    recurrenceType: string;
 	    recurrenceInterval: number;
 	    recurrenceEnd: string;
+	    recurrenceDays: string;
 	    category: string;
 	    color: string;
 	    allDay: boolean;
@@ -39,6 +40,7 @@ export namespace database {
 	        this.recurrenceType = source["recurrenceType"];
 	        this.recurrenceInterval = source["recurrenceInterval"];
 	        this.recurrenceEnd = source["recurrenceEnd"];
+	        this.recurrenceDays = source["recurrenceDays"];
 	        this.category = source["category"];
 	        this.color = source["color"];
 	        this.allDay = source["allDay"];
@@ -79,6 +81,7 @@ export namespace main {
 	    recurrenceType: string;
 	    recurrenceInterval: number;
 	    recurrenceEnd: string;
+	    recurrenceDays: string;
 	    category: string;
 	    color: string;
 	    allDay: boolean;
@@ -99,6 +102,7 @@ export namespace main {
 	        this.recurrenceType = source["recurrenceType"];
 	        this.recurrenceInterval = source["recurrenceInterval"];
 	        this.recurrenceEnd = source["recurrenceEnd"];
+	        this.recurrenceDays = source["recurrenceDays"];
 	        this.category = source["category"];
 	        this.color = source["color"];
 	        this.allDay = source["allDay"];
