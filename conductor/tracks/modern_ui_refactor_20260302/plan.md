@@ -16,7 +16,7 @@
     - [x] Verify tests pass.
 - [x] Task: Conductor - User Manual Verification 'Core Layout Refactor' (Protocol in workflow.md) 9d1535d
 
-## Phase 3: Weekly Appointments Feature (TDD)
+## Phase 3: Weekly Appointments Feature (TDD) [checkpoint: 53d730b]
 - [x] Task: Implement backend logic for fetching the current week's appointments. 3258d1e
     - [x] Write failing Go tests in `database/database_test.go` (or similar) for a "GetWeekEvents" function.
     - [x] Implement the Go function to query SQLite for events within the current 7-day range.
@@ -25,7 +25,7 @@
     - [x] Write failing React tests for the `UpcomingAppointments` component.
     - [x] Implement the component to display the list of events, styled according to the modern design.
     - [x] Verify React tests pass.
-- [~] Task: Conductor - User Manual Verification 'Weekly Appointments Feature' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Weekly Appointments Feature' (Protocol in workflow.md) 53d730b
 
 ## Phase 4: Visual Polish & Component Updates (TDD)
 - [ ] Task: Refactor the Calendar Month/Day views to match the new aesthetic.
