@@ -14,7 +14,7 @@
     - [x] Write failing tests for the updated layout grid/flex structure.
     - [x] Implement the new shell layout, ensuring smooth transitions between views.
     - [x] Verify tests pass.
-- [ ] Task: Conductor - User Manual Verification 'Core Layout Refactor' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Core Layout Refactor' (Protocol in workflow.md)
 
 ## Phase 3: Weekly Appointments Feature (TDD)
 - [ ] Task: Implement backend logic for fetching the current week's appointments.
