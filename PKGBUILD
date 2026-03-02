@@ -1,6 +1,6 @@
 # Maintainer: Omar Gerson
 pkgname=gerson-calendar
-pkgver=2.2.0
+pkgver=2.2.1
 pkgrel=1
 pkgdesc="Local-first offline calendar application with reminders and recurring events"
 arch=('x86_64')
