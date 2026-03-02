@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Implement ICS Import/Export**
+- [x] **Track: Implement ICS Import/Export**
   *Link: [./tracks/ics_import_export_20260301/](./tracks/ics_import_export_20260301/)*
