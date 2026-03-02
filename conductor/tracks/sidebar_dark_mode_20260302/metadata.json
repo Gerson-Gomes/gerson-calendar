@@ -1,0 +1,10 @@
+{
+  "track_id": "sidebar_dark_mode_20260302",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-03-02T10:00:00Z",
+  "updated_at": "2026-03-02T10:00:00Z",
+  "description": "1. update the sidebar that it only shows upcomming appointment, meaning it removes tasks from the sidebar if there is currently more than hour after the beginning of the task.
+
+2. update the font color on darkmode to make sure texts are readble when editing a task."
+}
