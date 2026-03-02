@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: update the PKGBUILD and the README and "push" to remote repository**
+- [x] **Track: update the PKGBUILD and the README and "push" to remote repository**
 *Link: [./tracks/pkgbuild_readme_update_20260302/](./tracks/pkgbuild_readme_update_20260302/)*
