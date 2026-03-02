@@ -10,10 +10,10 @@
     - [x] Write failing tests for the new Sidebar component structure and navigation links.
     - [x] Implement the Sidebar component with modern styling and responsive behavior.
     - [x] Verify tests pass and integrate with Wails runtime for navigation.
-- [ ] Task: Refactor the Main Application Shell to support the sidebar and content area.
-    - [ ] Write failing tests for the updated layout grid/flex structure.
-    - [ ] Implement the new shell layout, ensuring smooth transitions between views.
-    - [ ] Verify tests pass.
+- [x] Task: Refactor the Main Application Shell to support the sidebar and content area. ff83a78
+    - [x] Write failing tests for the updated layout grid/flex structure.
+    - [x] Implement the new shell layout, ensuring smooth transitions between views.
+    - [x] Verify tests pass.
 - [ ] Task: Conductor - User Manual Verification 'Core Layout Refactor' (Protocol in workflow.md)
 
 ## Phase 3: Weekly Appointments Feature (TDD)
