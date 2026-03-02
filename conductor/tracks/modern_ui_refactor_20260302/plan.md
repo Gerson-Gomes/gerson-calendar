@@ -17,10 +17,10 @@
 - [x] Task: Conductor - User Manual Verification 'Core Layout Refactor' (Protocol in workflow.md) 9d1535d
 
 ## Phase 3: Weekly Appointments Feature (TDD)
-- [ ] Task: Implement backend logic for fetching the current week's appointments.
-    - [ ] Write failing Go tests in `database/database_test.go` (or similar) for a "GetWeekEvents" function.
-    - [ ] Implement the Go function to query SQLite for events within the current 7-day range.
-    - [ ] Verify Go tests pass.
+- [x] Task: Implement backend logic for fetching the current week's appointments. 3258d1e
+    - [x] Write failing Go tests in `database/database_test.go` (or similar) for a "GetWeekEvents" function.
+    - [x] Implement the Go function to query SQLite for events within the current 7-day range.
+    - [x] Verify Go tests pass.
 - [ ] Task: Create the "Upcoming Appointments" frontend component.
     - [ ] Write failing React tests for the `UpcomingAppointments` component.
     - [ ] Implement the component to display the list of events, styled according to the modern design.
