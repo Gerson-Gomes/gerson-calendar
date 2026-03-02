@@ -13,15 +13,15 @@ This plan outlines the steps for enhancing recurring task support, including spe
     - [ ] Ensure `expandRecurring` respects `recurrence_end` strictly.
 - [x] Task: **Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)** b370ba3
 
-## Phase 2: Frontend Implementation
-- [ ] Task: **UI: Update EventModal for Recurring Days**
+## Phase 2: Frontend Implementation [checkpoint: 1334dc2]
+- [x] Task: **UI: Update EventModal for Recurring Days** 60996ea
     - [ ] Add checkboxes for days of the week in `EventModal.tsx` when "Weekly" is selected.
     - [ ] Update state and form submission to send `recurrence_days` to the backend.
     - [ ] Ensure `editEvent` correctly populates the days of the week checkboxes.
-- [ ] Task: **Bug Fix: Calendar Visibility (FullCalendar IDs)**
+- [x] Task: **Bug Fix: Calendar Visibility (FullCalendar IDs)** 60996ea
     - [ ] Update `App.tsx` `calendarEvents` mapping to generate unique IDs for virtual instances (e.g., `id: "${event.id}-${event.startDate}"`).
     - [ ] Verify that all instances now appear on the main calendar.
-- [ ] Task: **Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)**
+- [x] Task: **Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)** 1334dc2
 
 ## Phase 3: Final Verification and Cleanup
 - [ ] Task: **Integration: End-to-End Verification**
