@@ -14,4 +14,4 @@
 - [x] Task: Run a dry-run or lint check on the updated `PKGBUILD`. f6ca74c
     - [x] Run `namcap PKGBUILD` (if available) or simply check for syntax errors.
 - [x] Task: Remove the temporary verification script. 7424f40
-- [ ] Task: Conductor - User Manual Verification 'Final Integration & Cleanup' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Final Integration & Cleanup' (Protocol in workflow.md)
