@@ -203,20 +203,7 @@ func (a *App) ImportICS() (int, error) {
 		return 0, nil
 	}
 
-	events, err := icsparser.ParseICSFile(filePath)
-	if err != nil {
-		return 0, fmt.Errorf("failed to parse ICS file: %w", err)
-	}
-
-	imported := 0
-	for _, event := range events {
-		if _, err := a.db.SaveEvent(event); err != nil {
-			continue
-		}
-		imported++
-	}
-
-	return imported, nil
+	return icsparser.ImportICS(a.db, filePath)
 }
 
 func (a *App) ExportICS() (string, error) {
@@ -225,9 +212,33 @@ func (a *App) ExportICS() (string, error) {
 		return "", fmt.Errorf("failed to get events: %w", err)
 	}
 
-	filePath, err := icsexport.ExportToFile(events)
+	filePath, err := wailsRuntime.SaveFileDialog(a.ctx, wailsRuntime.SaveDialogOptions{
+		Title:           "Export Calendar to ICS",
+		DefaultFilename: fmt.Sprintf("gerson-calendar-export-%s.ics", time.Now().Format("2006-01-02")),
+		Filters: []wailsRuntime.FileFilter{
+			{
+				DisplayName: "ICS Files",
+				Pattern:     "*.ics",
+			},
+		},
+	})
+
+	if err != nil {
+		return "", fmt.Errorf("failed to open save dialog: %w", err)
+	}
+
+	if filePath == "" {
+		return "", nil
+	}
+
+	// We need a helper that writes to a specific path instead of temp
+	content, err := icsexport.BuildICSContent(events)
 	if err != nil {
 		return "", err
+	}
+
+	if err := os.WriteFile(filePath, []byte(content), 0644); err != nil {
+		return "", fmt.Errorf("failed to write ICS export: %w", err)
 	}
 
 	return filePath, nil

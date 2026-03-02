@@ -11,8 +11,8 @@ import (
 	"github.com/arran4/golang-ical"
 )
 
-// ExportToFile writes a .ics file to the OS temp directory and returns its path.
-func ExportToFile(events []database.Event) (string, error) {
+// BuildICSContent generates the ICS content as a string.
+func BuildICSContent(events []database.Event) (string, error) {
 	cal := ics.NewCalendar()
 	cal.SetMethod(ics.MethodRequest)
 	cal.SetProductId("-//Gerson Calendar//EN")
@@ -65,7 +65,15 @@ func ExportToFile(events []database.Event) (string, error) {
 		vEvent.SetDtStampTime(dtstamp)
 	}
 
-	content := cal.Serialize()
+	return cal.Serialize(), nil
+}
+
+// ExportToFile writes a .ics file to the OS temp directory and returns its path.
+func ExportToFile(events []database.Event) (string, error) {
+	content, err := BuildICSContent(events)
+	if err != nil {
+		return "", err
+	}
 
 	tmpDir := os.TempDir()
 	filename := fmt.Sprintf("gerson-calendar-export-%s.ics", time.Now().Format("2006-01-02"))
