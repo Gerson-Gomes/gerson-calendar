@@ -25,7 +25,7 @@
     - [x] Write failing React tests for the `UpcomingAppointments` component.
     - [x] Implement the component to display the list of events, styled according to the modern design.
     - [x] Verify React tests pass.
-- [ ] Task: Conductor - User Manual Verification 'Weekly Appointments Feature' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Weekly Appointments Feature' (Protocol in workflow.md)
 
 ## Phase 4: Visual Polish & Component Updates (TDD)
 - [ ] Task: Refactor the Calendar Month/Day views to match the new aesthetic.
