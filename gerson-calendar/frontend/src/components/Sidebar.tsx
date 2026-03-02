@@ -1,4 +1,5 @@
 import React from 'react';
+import { UpcomingAppointments, WeeklyEvent } from './UpcomingAppointments';
 import './Sidebar.css';
 
 interface SidebarProps {
@@ -9,6 +10,7 @@ interface SidebarProps {
   onImport: () => void;
   onExport: () => void;
   onAddEvent: () => void;
+  weeklyEvents: WeeklyEvent[];
 }
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -19,6 +21,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onImport,
   onExport,
   onAddEvent,
+  weeklyEvents,
 }) => {
   return (
     <aside className="sidebar">
@@ -62,10 +65,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
       </nav>
 
       <div className="sidebar-footer">
-        {/* Placeholder for Upcoming Appointments */}
-        <div className="upcoming-appointments-placeholder">
-          <p className="group-title">Upcoming</p>
-          <div className="empty-state">Weekly view coming soon</div>
+        <div className="upcoming-appointments-section">
+          <p className="group-title">Upcoming this week</p>
+          <UpcomingAppointments events={weeklyEvents} />
         </div>
       </div>
     </aside>

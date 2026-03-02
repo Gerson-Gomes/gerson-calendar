@@ -3,9 +3,10 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { Sidebar } from './components/Sidebar';
+import { WeeklyEvent } from './components/UpcomingAppointments';
 import { EventModal, EventFormData, EditEventData } from './components/EventModal';
 import { EventDetail, EventDetailData } from './components/EventDetail';
-import { SaveEvent, GetAllEvents, DeleteEvent, UpdateEvent, DeleteRecurringSeries, ImportICS, ExportICS, OpenFile, OpenURL } from '../wailsjs/go/main/App';
+import { SaveEvent, GetAllEvents, GetWeekEvents, DeleteEvent, UpdateEvent, DeleteRecurringSeries, ImportICS, ExportICS, OpenFile, OpenURL } from '../wailsjs/go/main/App';
 import './App.css';
 
 interface CalendarEvent {
@@ -29,6 +30,7 @@ interface CalendarEvent {
 
 function App() {
   const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [weeklyEvents, setWeeklyEvents] = useState<WeeklyEvent[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | undefined>();
   const [detailEvent, setDetailEvent] = useState<EventDetailData | null>(null);
@@ -50,8 +52,9 @@ function App() {
 
   const loadEvents = async () => {
     try {
-      const fetched = await GetAllEvents();
-      setEvents(fetched ?? []);
+      const [all, weekly] = await Promise.all([GetAllEvents(), GetWeekEvents()]);
+      setEvents(all ?? []);
+      setWeeklyEvents(weekly ?? []);
     } catch (err) {
       console.error('Failed to load events:', err);
       setError('Failed to load events from database.');
@@ -299,6 +302,7 @@ function App() {
         onImport={handleImportICS}
         onExport={handleExportICS}
         onAddEvent={handleAddEvent}
+        weeklyEvents={weeklyEvents}
       />
 
       <main className="main-content">

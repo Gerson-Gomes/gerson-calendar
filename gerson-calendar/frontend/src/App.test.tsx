@@ -5,6 +5,7 @@ import { describe, it, expect, vi } from 'vitest';
 // Mock Wails JS functions
 vi.mock('../wailsjs/go/main/App', () => ({
   GetAllEvents: vi.fn(() => Promise.resolve([])),
+  GetWeekEvents: vi.fn(() => Promise.resolve([])),
   SaveEvent: vi.fn(),
   UpdateEvent: vi.fn(),
   DeleteEvent: vi.fn(),
