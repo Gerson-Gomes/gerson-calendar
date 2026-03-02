@@ -13,7 +13,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Wails Integration & Frontend' (Protocol in workflow.md)
 
 ## Phase 3: Testing & Finalization
-- [ ] Task: Write unit tests for ICS parsing and generation.
-- [ ] Task: Perform end-to-end testing of the import/export flow.
-- [ ] Task: Final code review and cleanup.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Testing & Finalization' (Protocol in workflow.md)
+- [x] Task: Write unit tests for ICS parsing and generation. a985474, 7b6e48d
+- [x] Task: Perform end-to-end testing of the import/export flow. 430a155
+- [x] Task: Final code review and cleanup. b530127
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Testing & Finalization' (Protocol in workflow.md)
