@@ -248,10 +248,24 @@ Search "Gerson Calendar" in your app launcher.
 | File Attachments | ✅ |
 | Zoom Links | ✅ |
 | Month/Week Views | ✅ |
-| Edit Events | ❌ (planned) |
-| Recurring Events | ❌ (planned) |
-| Search | ❌ (planned) |
-| Export/Import | ❌ (planned) |
+| Edit Events | ✅ |
+| Recurring Events | ✅ |
+| Search | ✅ |
+| Export/Import | ✅ |
+
+---
+
+## 📜 Changelog
+
+### [2.1.1] - 2026-03-01
+- **New Feature**: Robust ICS Import/Export using `github.com/arran4/golang-ical`.
+- **Improvement**: Enhanced date parsing and RRULE support for imported calendar files.
+- **Improvement**: Added Save File Dialog for exported ICS files.
+- **Bug Fix**: Fixed missing 'os' import in Wails bindings.
+- **Build**: Updated PKGBUILD to 2.1.1.
+
+### [2.1.0] - 2026-02-18
+- Initial production-ready release with core calendar features.
 
 ---
 
