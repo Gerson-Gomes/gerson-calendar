@@ -44,5 +44,5 @@
 
 ## Phase 5: Final Integration & Verification
 - [x] Task: Perform full application regression testing to ensure no existing functionality is broken. 06dbba7
-- [ ] Task: Conduct a final visual review against the `stitch-assets` image.
-- [ ] Task: Conductor - User Manual Verification 'Final Integration & Verification' (Protocol in workflow.md)
+- [~] Task: Conduct a final visual review against the `stitch-assets` image.
+- [~] Task: Conductor - User Manual Verification 'Final Integration & Verification' (Protocol in workflow.md)
