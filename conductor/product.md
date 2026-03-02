@@ -23,6 +23,7 @@ Gerson Calendar is a privacy-focused, local-first calendar application designed 
 - **Sidebar Navigation**: A modern, efficient sidebar for quick access to tools, search, and upcoming events.
 - **Upcoming Appointments**: A dedicated weekly view in the sidebar for tracking near-term commitments.
 - **Event Management**: Core calendar functionality to create, view, and manage events.
+- **Recurring Events**: Support for flexible recurrence patterns (daily, weekly on specific days, monthly, yearly) with customizable intervals and end dates.
 - **File Attachments**: Ability to attach PDFs and other documents to calendar events.
 
 ## Platform Strategy
