@@ -32,3 +32,7 @@
     - [x] Verify both sidebar filtering and dark mode readability in a unified build.
     - [x] Ensure no regressions in the task editing flow.
 - [x] Task: Conductor - User Manual Verification 'Final Integration' (Protocol in workflow.md) 5a7b1c2
+
+## Phase: Review Fixes
+
+- [x] Task: Apply review suggestions b1cec6e
