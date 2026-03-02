@@ -6,7 +6,7 @@ These guidelines define the visual, interactive, and prose standards for Gerson 
 - **Minimalist & Concise**: Use short, punchy, and modern language. Avoid unnecessary jargon and keep UI labels clear and direct.
 
 ## Visual Style
-- **Native Linux Look**: The application should follow the system's native look and feel (GTK/Adwaita). Prioritize consistent spacing, typography, and color schemes that align with modern Linux desktop environments.
+- **Vibrant Modern Aesthetic**: A deep dark mode theme with vibrant blue and violet accents, modern typography (Nunito), and subtle animations (fadeIn, slideUp) for a premium feel.
 
 ## UX Principles
 - **Speed & Responsiveness**: Prioritize performance. Every interaction should feel instantaneous.
