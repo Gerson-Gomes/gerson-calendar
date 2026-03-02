@@ -32,10 +32,10 @@
     - [x] Write failing tests for updated view components.
     - [x] Apply modern styling, vibrant accents, and improved typography to the calendar grid.
     - [x] Verify tests pass.
-- [ ] Task: Refactor Event Creation and Edit Modals.
-    - [ ] Write failing tests for the new modal design.
-    - [ ] Update the UI of modals to be consistent with the modern dark mode theme.
-    - [ ] Verify tests pass.
+- [x] Task: Refactor Event Creation and Edit Modals. 724235f
+    - [x] Write failing tests for the new modal design.
+    - [x] Update the UI of modals to be consistent with the modern dark mode theme.
+    - [x] Verify tests pass.
 - [ ] Task: Implement Interactive Elements (Animations & Transitions).
     - [ ] Write failing tests for interaction states (e.g., hover effects, list transitions).
     - [ ] Add Vanilla CSS animations and transitions for a "vibrant" feel.
