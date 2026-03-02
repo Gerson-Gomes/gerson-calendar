@@ -32,5 +32,6 @@ describe('App Shell', () => {
     
     // Check for Main Content area
     expect(screen.getByTestId('full-calendar')).toBeInTheDocument();
+    expect(screen.getByTestId('calendar-container')).toHaveClass('calendar-container');
   });
 });

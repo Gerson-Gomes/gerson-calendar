@@ -312,7 +312,7 @@ function App() {
           </div>
         )}
 
-        <div className="calendar-container">
+        <div className="calendar-container" data-testid="calendar-container">
           <FullCalendar
             ref={calendarRef}
             plugins={[dayGridPlugin, interactionPlugin]}
