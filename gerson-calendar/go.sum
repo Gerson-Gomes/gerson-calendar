@@ -1,3 +1,5 @@
+github.com/arran4/golang-ical v0.3.3 h1:8oEhMFS8tBoXmrMf6dKVWPNB1lNfE8xGn/c5NYm3SKg=
+github.com/arran4/golang-ical v0.3.3/go.mod h1:OnguFgjN0Hmx8jzpmWcC+AkHio94ujmLHKoaef7xQh8=
 github.com/bep/debounce v1.2.1 h1:v67fRdBA9UQu2NhLFXrSg0Brw7CexQekrBwDMM8bzeY=
 github.com/bep/debounce v1.2.1/go.mod h1:H8yggRPQKLUhUoqrJC1bO2xNya7vanpDl7xR3ISbCJ0=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=

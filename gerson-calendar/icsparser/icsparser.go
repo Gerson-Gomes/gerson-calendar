@@ -1,13 +1,13 @@
 package icsparser
 
 import (
-	"bufio"
 	"fmt"
 	"os"
 	"strings"
 	"time"
 
 	"gerson-calendar/database"
+	"github.com/arran4/golang-ical"
 )
 
 // ParseICSFile reads an ICS file and returns a slice of Events.
@@ -18,76 +18,50 @@ func ParseICSFile(filePath string) ([]database.Event, error) {
 	}
 	defer f.Close()
 
-	var events []database.Event
-	var current *database.Event
-	var inEvent bool
-
-	scanner := bufio.NewScanner(f)
-	for scanner.Scan() {
-		line := strings.TrimSpace(scanner.Text())
-
-		switch {
-		case line == "BEGIN:VEVENT":
-			inEvent = true
-			current = &database.Event{}
-
-		case line == "END:VEVENT":
-			if inEvent && current != nil {
-				events = append(events, *current)
-			}
-			inEvent = false
-			current = nil
-
-		case inEvent && current != nil:
-			key, value := parseICSLine(line)
-			switch key {
-			case "SUMMARY":
-				current.Title = value
-			case "DTSTART", "DTSTART;VALUE=DATE":
-				if t, err := parseICSDate(value); err == nil {
-					current.StartDate = t
-				}
-			case "DTEND", "DTEND;VALUE=DATE":
-				if t, err := parseICSDate(value); err == nil {
-					current.EndDate = t
-				}
-			case "DESCRIPTION":
-				current.Description = strings.ReplaceAll(value, "\\n", "\n")
-			case "URL":
-				if strings.Contains(value, "zoom") {
-					current.ZoomLink = value
-				}
-			case "RRULE":
-				parseRRule(value, current)
-			}
-		}
+	cal, err := ics.ParseCalendar(f)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse ICS calendar: %w", err)
 	}
 
-	if err := scanner.Err(); err != nil {
-		return nil, fmt.Errorf("error reading ICS file: %w", err)
+	var events []database.Event
+
+	for _, vEvent := range cal.Events() {
+		event := database.Event{}
+
+		if prop := vEvent.GetProperty(ics.ComponentPropertySummary); prop != nil {
+			event.Title = prop.Value
+		}
+
+		if prop := vEvent.GetProperty(ics.ComponentPropertyDescription); prop != nil {
+			event.Description = strings.ReplaceAll(prop.Value, "\\n", "\n")
+		}
+
+		if prop := vEvent.GetProperty(ics.ComponentPropertyDtStart); prop != nil {
+			if t, err := parseICSDate(prop.Value); err == nil {
+				event.StartDate = t
+			}
+		}
+
+		if prop := vEvent.GetProperty(ics.ComponentPropertyDtEnd); prop != nil {
+			if t, err := parseICSDate(prop.Value); err == nil {
+				event.EndDate = t
+			}
+		}
+
+		if prop := vEvent.GetProperty(ics.ComponentPropertyUrl); prop != nil {
+			if strings.Contains(prop.Value, "zoom") {
+				event.ZoomLink = prop.Value
+			}
+		}
+
+		if prop := vEvent.GetProperty(ics.ComponentPropertyRrule); prop != nil {
+			parseRRule(prop.Value, &event)
+		}
+
+		events = append(events, event)
 	}
 
 	return events, nil
-}
-
-func parseICSLine(line string) (string, string) {
-	idx := strings.Index(line, ":")
-	if idx < 0 {
-		return line, ""
-	}
-	key := line[:idx]
-	value := line[idx+1:]
-
-	// Handle properties with parameters like DTSTART;TZID=America/New_York:20250101T120000
-	if semicolonIdx := strings.Index(key, ";"); semicolonIdx >= 0 {
-		// Keep the full key for specific checks (e.g., DTSTART;VALUE=DATE)
-		baseKey := key[:semicolonIdx]
-		if baseKey == "DTSTART" || baseKey == "DTEND" {
-			return baseKey, value
-		}
-	}
-
-	return key, value
 }
 
 func parseICSDate(value string) (time.Time, error) {
@@ -96,6 +70,11 @@ func parseICSDate(value string) (time.Time, error) {
 		"20060102T150405Z", // UTC
 		"20060102T150405",  // Local
 		"20060102",         // Date only
+	}
+
+	// Clean up value (e.g., remove parameters if they leaked in)
+	if idx := strings.Index(value, ":"); idx >= 0 {
+		value = value[idx+1:]
 	}
 
 	for _, format := range formats {
@@ -127,7 +106,9 @@ func parseRRule(rrule string, event *database.Event) {
 				event.RecurrenceType = "yearly"
 			}
 		case "INTERVAL":
-			if n := parseInt(kv[1]); n > 0 {
+			var n int
+			fmt.Sscanf(kv[1], "%d", &n)
+			if n > 0 {
 				event.RecurrenceInterval = n
 			}
 		case "UNTIL":
@@ -136,14 +117,4 @@ func parseRRule(rrule string, event *database.Event) {
 			}
 		}
 	}
-}
-
-func parseInt(s string) int {
-	var n int
-	for _, c := range s {
-		if c >= '0' && c <= '9' {
-			n = n*10 + int(c-'0')
-		}
-	}
-	return n
 }
