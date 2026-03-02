@@ -19,11 +19,11 @@
 - [x] Task: Dark Mode CSS Analysis 503e905
     - [x] Identify the CSS classes used for the Edit Task modal/form in dark mode.
     - [x] Pinpoint the specific elements (labels, input fields) with low contrast.
-- [ ] Task: TDD - CSS/Readability (Visual/Code)
-    - [ ] **Write Tests**: Since this is visual, create or update a snapshot/visual regression test if available, or a unit test to verify the correct CSS classes are applied in dark mode.
-    - [ ] **Red Phase**: Confirm that dark mode classes result in the problematic font colors.
-    - [ ] **Green Phase**: Update Vanilla CSS to provide high-contrast font colors (e.g., `#FFFFFF` or a light gray for text on dark backgrounds) within the Edit Task context.
-    - [ ] **Refactor**: Consolidate these style fixes into the main dark mode stylesheet or component-specific CSS.
+- [x] Task: TDD - CSS/Readability (Visual/Code) 7726212
+    - [x] **Write Tests**: Since this is visual, create or update a snapshot/visual regression test if available, or a unit test to verify the correct CSS classes are applied in dark mode.
+    - [x] **Red Phase**: Confirm that dark mode classes result in the problematic font colors.
+    - [x] **Green Phase**: Update Vanilla CSS to provide high-contrast font colors (e.g., `#FFFFFF` or a light gray for text on dark backgrounds) within the Edit Task context.
+    - [x] **Refactor**: Consolidate these style fixes into the main dark mode stylesheet or component-specific CSS.
 - [ ] Task: Conductor - User Manual Verification 'Dark Mode Readability' (Protocol in workflow.md)
 
 ## Phase 3: Final Integration & Review
