@@ -6,10 +6,10 @@
 - [x] Task: Conductor - User Manual Verification 'Foundation & Theme Setup' (Protocol in workflow.md) ca7df7b
 
 ## Phase 2: Core Layout Refactor (TDD)
-- [ ] Task: Implement the new Sidebar Navigation layout.
-    - [ ] Write failing tests for the new Sidebar component structure and navigation links.
-    - [ ] Implement the Sidebar component with modern styling and responsive behavior.
-    - [ ] Verify tests pass and integrate with Wails runtime for navigation.
+- [x] Task: Implement the new Sidebar Navigation layout. 573a6d9
+    - [x] Write failing tests for the new Sidebar component structure and navigation links.
+    - [x] Implement the Sidebar component with modern styling and responsive behavior.
+    - [x] Verify tests pass and integrate with Wails runtime for navigation.
 - [ ] Task: Refactor the Main Application Shell to support the sidebar and content area.
     - [ ] Write failing tests for the updated layout grid/flex structure.
     - [ ] Implement the new shell layout, ensuring smooth transitions between views.
