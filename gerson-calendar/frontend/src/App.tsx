@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { Sidebar } from './components/Sidebar';
 import { EventModal, EventFormData, EditEventData } from './components/EventModal';
 import { EventDetail, EventDetailData } from './components/EventDetail';
 import { SaveEvent, GetAllEvents, DeleteEvent, UpdateEvent, DeleteRecurringSeries, ImportICS, ExportICS, OpenFile, OpenURL } from '../wailsjs/go/main/App';
@@ -37,7 +38,6 @@ function App() {
   const [isDarkMode, setIsDarkMode] = useState(() => localStorage.getItem('gc-theme') === 'dark');
 
   const calendarRef = useRef<FullCalendar>(null);
-  const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
@@ -69,6 +69,24 @@ function App() {
     }
   }, []);
 
+  const handleImportICS = async () => {
+    try {
+      const count = await ImportICS();
+      if (count > 0) {
+        await loadEvents();
+        setError('');
+        alert(`Successfully imported ${count} event(s).`);
+      }
+    } catch {
+      setError('Failed to import ICS file.');
+    }
+  };
+
+  const handleAddEvent = () => {
+    setEditEvent(null);
+    setIsModalOpen(true);
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const tag = (document.activeElement as HTMLElement)?.tagName;
@@ -84,13 +102,7 @@ function App() {
 
       if (e.ctrlKey && e.key === 'n') {
         e.preventDefault();
-        setEditEvent(null);
-        setIsModalOpen(true);
-        return;
-      }
-      if (e.ctrlKey && e.key === 'f') {
-        e.preventDefault();
-        searchRef.current?.focus();
+        handleAddEvent();
         return;
       }
       if (e.ctrlKey && e.key === 'e') {
@@ -212,19 +224,6 @@ function App() {
     OpenURL(url).catch(() => setError('Failed to open link.'));
   };
 
-  const handleImportICS = async () => {
-    try {
-      const count = await ImportICS();
-      if (count > 0) {
-        await loadEvents();
-        setError('');
-        alert(`Successfully imported ${count} event(s).`);
-      }
-    } catch {
-      setError('Failed to import ICS file.');
-    }
-  };
-
   const handleEventDrop = async (dropInfo: {
     event: { id: string; start: Date | null; end: Date | null; allDay: boolean };
     revert: () => void;
@@ -292,66 +291,42 @@ function App() {
 
   return (
     <div id="App">
-      <div className="calendar-header">
-        <h1>Gerson Calendar</h1>
-        <div className="search-bar-wrapper">
-          <input
-            ref={searchRef}
-            type="search"
-            className="search-bar"
-            placeholder="Search events... (Ctrl+F)"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+      <Sidebar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        isDarkMode={isDarkMode}
+        setIsDarkMode={setIsDarkMode}
+        onImport={handleImportICS}
+        onExport={handleExportICS}
+        onAddEvent={handleAddEvent}
+      />
+
+      <main className="main-content">
+        {error && (
+          <div className="error-banner" onClick={() => setError('')}>
+            {error} <span className="error-dismiss">✕</span>
+          </div>
+        )}
+
+        <div className="calendar-container">
+          <FullCalendar
+            ref={calendarRef}
+            plugins={[dayGridPlugin, interactionPlugin]}
+            initialView="dayGridMonth"
+            events={calendarEvents}
+            dateClick={handleDateClick}
+            eventClick={handleEventClick}
+            eventDrop={handleEventDrop}
+            editable={true}
+            height="100%"
+            headerToolbar={{
+              left: 'prev,next today',
+              center: 'title',
+              right: 'dayGridMonth,dayGridWeek',
+            }}
           />
         </div>
-        <div className="header-actions">
-          <button
-            className="theme-toggle"
-            onClick={() => setIsDarkMode(d => !d)}
-            title={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-          >
-            {isDarkMode ? '☀' : '☾'}
-          </button>
-          <button className="import-button" onClick={handleImportICS} title="Import ICS calendar file">
-            Import ICS
-          </button>
-          <button className="export-button" onClick={handleExportICS} title="Export all events to ICS (Ctrl+E)">
-            Export ICS
-          </button>
-          <button
-            className="add-event-button"
-            onClick={() => { setEditEvent(null); setIsModalOpen(true); }}
-            title="New event (Ctrl+N)"
-          >
-            + Add Event
-          </button>
-        </div>
-      </div>
-
-      {error && (
-        <div className="error-banner" onClick={() => setError('')}>
-          {error} <span className="error-dismiss">✕</span>
-        </div>
-      )}
-
-      <div className="calendar-container">
-        <FullCalendar
-          ref={calendarRef}
-          plugins={[dayGridPlugin, interactionPlugin]}
-          initialView="dayGridMonth"
-          events={calendarEvents}
-          dateClick={handleDateClick}
-          eventClick={handleEventClick}
-          eventDrop={handleEventDrop}
-          editable={true}
-          height="auto"
-          headerToolbar={{
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,dayGridWeek',
-          }}
-        />
-      </div>
+      </main>
 
       <EventModal
         isOpen={isModalOpen}

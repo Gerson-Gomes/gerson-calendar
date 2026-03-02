@@ -65,127 +65,44 @@ body,
   -moz-osx-font-smoothing: grayscale;
   background: var(--bg-primary);
   color: var(--text-primary);
+  overflow: hidden;
 }
 
 #App {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 100vh;
+  width: 100vw;
   background: var(--bg-primary);
 }
 
-.calendar-header {
-  background: var(--bg-surface);
-  padding: 14px 24px;
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: var(--shadow-sm);
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.calendar-header h1 {
-  margin: 0;
-  font-size: 22px;
-  color: var(--text-primary);
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.search-bar-wrapper {
+.main-content {
   flex: 1;
-  min-width: 160px;
-  max-width: 340px;
-}
-
-.search-bar {
-  width: 100%;
-  padding: 8px 14px;
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  font-size: 13px;
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  outline: none;
-  transition: border-color 0.2s;
-}
-
-.search-bar:focus {
-  border-color: var(--accent);
-}
-
-.header-actions {
   display: flex;
-  gap: 8px;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.theme-toggle {
-  padding: 8px 10px;
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  border-radius: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  line-height: 1;
-}
-
-.theme-toggle:hover {
-  background: var(--bg-hover);
-}
-
-.import-button,
-.export-button {
-  padding: 8px 16px;
-  background: transparent;
-  border: 1px solid var(--accent);
-  color: var(--accent);
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-  white-space: nowrap;
-}
-
-.import-button:hover,
-.export-button:hover {
-  background: var(--accent);
-  color: white;
-}
-
-.add-event-button {
-  padding: 8px 16px;
-  background: var(--accent);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  white-space: nowrap;
-}
-
-.add-event-button:hover {
-  background: var(--accent-hover);
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
 .error-banner {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
   background: var(--error-bg);
   border: 1px solid var(--error-border);
   color: var(--error-text);
   padding: 12px 24px;
-  margin: 0;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 12px;
+  min-width: 300px;
 }
 
 .error-dismiss {
@@ -195,11 +112,11 @@ body,
 
 .calendar-container {
   flex: 1;
-  padding: 20px;
-  overflow-y: auto;
+  padding: 24px;
+  overflow: hidden;
   background: var(--bg-surface);
-  margin: 16px;
-  border-radius: 8px;
+  margin: 24px;
+  border-radius: var(--border-radius);
   box-shadow: var(--shadow-md);
 }
 
@@ -225,39 +142,44 @@ body,
   color: var(--text-primary);
 }
 
-[data-theme="dark"] .fc-button {
-  background-color: var(--accent) !important;
-}
-
 .fc {
   font-family: inherit;
+  height: 100%;
 }
 
 .fc-toolbar-title {
   font-size: 20px !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
   color: var(--text-primary);
 }
 
 .fc-button {
-  background: var(--accent) !important;
-  border: none !important;
+  background: var(--bg-hover) !important;
+  border: 1px solid var(--border-color) !important;
+  color: var(--text-primary) !important;
   padding: 6px 14px !important;
-  font-weight: 500 !important;
+  font-weight: 600 !important;
   text-transform: capitalize !important;
+  border-radius: 8px !important;
+  box-shadow: none !important;
+  transition: all var(--transition-fast) !important;
 }
 
 .fc-button:hover {
-  background: var(--accent-hover) !important;
+  background: var(--bg-surface) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
 }
 
 .fc-button-active {
-  background: var(--accent-dark) !important;
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: white !important;
 }
 
 .fc-daygrid-day {
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color var(--transition-fast);
 }
 
 .fc-daygrid-day:hover {
@@ -267,13 +189,17 @@ body,
 .fc-event {
   cursor: pointer;
   border: none !important;
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
   font-size: 12px;
+  font-weight: 500;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-fast);
 }
 
 .fc-event:hover {
-  filter: brightness(0.88);
+  transform: scale(1.02);
+  filter: brightness(1.1);
 }
 
 .fc-daygrid-event-dot {
@@ -285,19 +211,21 @@ body,
 }
 
 .fc-day-other {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .fc-col-header-cell {
-  padding: 10px 0;
-  font-weight: 600;
-  color: var(--text-secondary);
+  padding: 12px 0;
+  font-weight: 700;
+  color: var(--text-muted);
   text-transform: uppercase;
   font-size: 11px;
+  letter-spacing: 0.5px;
 }
 
 .fc-daygrid-day-number {
-  padding: 6px 8px;
-  font-weight: 500;
-  color: var(--text-muted);
+  padding: 8px 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 13px;
 }
