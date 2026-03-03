@@ -15,7 +15,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Update FullCalendar Display' (Protocol in workflow.md) d732ebc
 
 ## Phase 3: Update Components and Utility Functions
-- [ ] Task: Update `UpcomingAppointments` to use 24-Hour Format
+- [x] Task: Update UpcomingAppointments to use 24-Hour Format 776cd37
     - [ ] Modify `formatTime` in `UpcomingAppointments.tsx` to use `hour12: false`.
     - [ ] Update `UpcomingAppointments.test.tsx` to verify 24-hour display.
 - [ ] Task: Update `EventDetail` to use 24-Hour Format
