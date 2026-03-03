@@ -41,15 +41,16 @@ const CATEGORY_LABELS: Record<string, string> = {
 function formatDateTime(iso: string, allDay?: boolean): string {
   const d = new Date(iso);
   if (allDay) {
-    return d.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+    return d.toLocaleDateString('en-GB', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
   }
-  return d.toLocaleString(undefined, {
+  return d.toLocaleString('en-GB', {
     weekday: 'short',
     year: 'numeric',
     month: 'short',
     day: 'numeric',
     hour: '2-digit',
     minute: '2-digit',
+    hour12: false,
   });
 }
 
