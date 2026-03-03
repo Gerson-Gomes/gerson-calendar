@@ -3,10 +3,15 @@ import { UpcomingAppointments, WeeklyEvent } from '../components/UpcomingAppoint
 import { EventDetail, EventDetailData } from '../components/EventDetail';
 import { describe, it, expect, vi } from 'vitest';
 
+// Use fixed dates that result in predictable local times or use a helper to get local 24h string
+const getLocal24h = (iso: string) => {
+  return new Date(iso).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: false });
+};
+
 const mockWeeklyEvent: WeeklyEvent = {
   id: 1,
   title: 'Test Appointment',
-  startDate: '2026-03-03T14:30:00Z', // 2:30 PM
+  startDate: '2026-03-03T14:30:00Z',
   endDate: '2026-03-03T15:30:00Z',
   color: '#3b82f6',
   category: 'Work'
@@ -32,15 +37,13 @@ const mockEventDetail: EventDetailData = {
 };
 
 describe('Time Formatting - 24 Hour Requirement', () => {
-  it('UpcomingAppointments displays time in 24h format (14:30)', () => {
+  it('UpcomingAppointments displays time in 24h format', () => {
     render(<UpcomingAppointments events={[mockWeeklyEvent]} />);
-    // This is expected to fail initially if the system locale is 12h
-    // or if toLocaleTimeString defaults to 12h.
-    // We want to see '14:30' (or '14:30' with some variations like leading zero)
-    // but definitely NOT '2:30 PM'.
-    const timeElement = screen.getByText(/14:30/);
+    const expectedTime = getLocal24h(mockWeeklyEvent.startDate);
+    const timeElement = screen.getByText(new RegExp(expectedTime));
     expect(timeElement).toBeInTheDocument();
     expect(screen.queryByText(/PM/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/AM/i)).not.toBeInTheDocument();
   });
 
   it('EventDetail displays start and end time in 24h format', () => {
@@ -56,9 +59,12 @@ describe('Time Formatting - 24 Hour Requirement', () => {
       />
     );
     
-    // Check for 14:30 and 15:30
-    expect(screen.getAllByText(/14:30/)[0]).toBeInTheDocument();
-    expect(screen.getAllByText(/15:30/)[0]).toBeInTheDocument();
+    const expectedStart = getLocal24h(mockEventDetail.startDate);
+    const expectedEnd = getLocal24h(mockEventDetail.endDate);
+
+    expect(screen.getAllByText(new RegExp(expectedStart))[0]).toBeInTheDocument();
+    expect(screen.getAllByText(new RegExp(expectedEnd))[0]).toBeInTheDocument();
     expect(screen.queryByText(/PM/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/AM/i)).not.toBeInTheDocument();
   });
 });
