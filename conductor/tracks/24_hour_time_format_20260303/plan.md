@@ -14,17 +14,17 @@
     - [ ] Write unit tests in `App.test.tsx` to verify FullCalendar configuration.
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Update FullCalendar Display' (Protocol in workflow.md) d732ebc
 
-## Phase 3: Update Components and Utility Functions
+## Phase 3: Update Components and Utility Functions [checkpoint: 89a138b]
 - [x] Task: Update UpcomingAppointments to use 24-Hour Format 776cd37
     - [ ] Modify `formatTime` in `UpcomingAppointments.tsx` to use `hour12: false`.
     - [ ] Update `UpcomingAppointments.test.tsx` to verify 24-hour display.
 - [x] Task: Update EventDetail to use 24-Hour Format a409f6f
     - [ ] Modify `formatDateTime` in `EventDetail.tsx` to use `hour12: false`.
     - [ ] Add or update tests for `EventDetail` to verify 24-hour display.
-- [~] Task: Verify EventModal and Time Picker
+- [x] Task: Verify EventModal and Time Picker 190ead9
     - [ ] Verify `toLocalTime` in `EventModal.tsx` already uses 24-hour format (via `getHours()` and `getMinutes()`).
     - [ ] Ensure `<input type="time" />` behavior is consistent with 24-hour requirements.
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Update Components and Utility Functions' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Update Components and Utility Functions' (Protocol in workflow.md) 89a138b
 
 ## Phase 4: Global Verification and Finalization
 - [ ] Task: Comprehensive Application Verification
