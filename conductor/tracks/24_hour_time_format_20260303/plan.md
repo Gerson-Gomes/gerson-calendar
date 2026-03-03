@@ -9,7 +9,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Research and Testing Infrastructure' (Protocol in workflow.md) 939bd64
 
 ## Phase 2: Update FullCalendar Display
-- [ ] Task: Configure FullCalendar to use 24-Hour Format
+- [x] Task: Configure FullCalendar to use 24-Hour Format 357a133
     - [ ] Update `App.tsx` with `eventTimeFormat` and `slotLabelFormat` properties in the `FullCalendar` component.
     - [ ] Write unit tests in `App.test.tsx` to verify FullCalendar configuration.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Update FullCalendar Display' (Protocol in workflow.md)
