@@ -18,7 +18,7 @@
 - [x] Task: Update UpcomingAppointments to use 24-Hour Format 776cd37
     - [ ] Modify `formatTime` in `UpcomingAppointments.tsx` to use `hour12: false`.
     - [ ] Update `UpcomingAppointments.test.tsx` to verify 24-hour display.
-- [ ] Task: Update `EventDetail` to use 24-Hour Format
+- [x] Task: Update EventDetail to use 24-Hour Format a409f6f
     - [ ] Modify `formatDateTime` in `EventDetail.tsx` to use `hour12: false`.
     - [ ] Add or update tests for `EventDetail` to verify 24-hour display.
 - [ ] Task: Verify `EventModal` and Time Picker
